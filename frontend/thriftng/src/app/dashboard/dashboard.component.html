@@ -1,0 +1,36 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light shadow fixed-top py-3 animate__animated animate__fadeInDown animate__fast">
+<div class="container">
+<a routerLink="/dashboard" class="logo navbar-brand">
+<img src="assets/img/logo.png" alt="">
+<span class="navtext ml-1">Thrift.ng</span>
+</a>
+
+<button class="btn btn-sm font-weight-bold px-3 py-2 log mr-2" (click)="logout()">Logout<i class="bi bi-arrow-right"></i></button>
+
+</div>
+</nav>
+
+<router-outlet></router-outlet>
+
+
+<nav class="navbar bg shadow fixed-bottom py-3  animate__animated animate__fadeIn animate__slower">
+<div class="container">
+<div type="submit" class="col animate__animated animate__fadeIn animate__slower" (click)="mythrifts()">
+<small  class="font-weight-bold text-light fon">My Thrifts</small>
+</div>
+
+<div type="submit" class="col animate__animated animate__fadeIn animate__slower">
+<small class="font-weight-bold text-light fon" (click)="invites()">Invites <i class="fas fa-sync-alt text-light"></i></small>
+</div>
+
+<div type="submit" class="col animate__animated animate__fadeIn animate__slower">
+<small class="font-weight-bold text-light fon" (click)="fund()">Fund Wallet</small>
+</div>
+
+<div type="submit" class="col animate__animated animate__fadeIn animate__slower">
+<small class="font-weight-bold text-light fon" (click)="withdraw()">Withdraw  </small>
+</div>
+
+
+</div>
+</nav>

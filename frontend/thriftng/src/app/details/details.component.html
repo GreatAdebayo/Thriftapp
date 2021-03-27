@@ -1,0 +1,61 @@
+<div class="container mt-5">
+<div class="row mt-5">
+<div class="col-md-7 animate__animated animate__fadeIn justify-content-center">
+<ng-container *ngFor="let post of ajopost"> 
+<section *ngIf="ajoId==post.ajo_id">
+<p class="font-weight-bold animate__animated animate__fadeIn">Start Inviting your friends</p>
+<div class="alert alert-danger text-center bg-transparent" role="alert">
+    <small class="font-weight-bold justify-content-center">We couldn't debit your friend, Great's wallet. Please tell him/her to fund his wallet</small>
+    </div>
+<h5 class="font-weight-bold txt">₦{{post.ajowallet}}.00</h5>
+<h6 class="font-weight-bold text-info">Title: {{post.title}}</h6>
+<small class="font-weight-bold  badge badge-pill badge-primary text-white">Type: {{post.type}} ({{post.duration}})</small> <br> <small class="font-weight-bold text-primary">Amount to be saved: <span style="font-size:large;">₦{{post.amount}}.00</span></small>
+
+
+<div class="animate__animated animate__fadeIn">
+<div class="alert alert-primary text-center justify-content-center bg-transparent" role="alert"  *ngIf="notice">
+<small class="font-weight-bold">Please only invite your known and trust worthy friends and you can only invite <small class="text-danger" style="font-size: large;">{{noOfFriends}} </small>friends</small>  
+</div>
+
+<div class="alert alert-primary" role="alert" *ngIf="success">
+<small class="font-weight-bold" >We have sent an invite email to your friend Great. <br> You'll be notified via email when they accept your invite.</small>  
+</div> <br>
+<label class="font-weight-bold txt">Invite your friends</label>
+<input type="email" class="form-control border-top-0 border-left-0 border-right-0 rounded-0 inpu font-italic txt" aria-label="Small" aria-describedby="inputGroup-sizing-sm" name="email" placeholder="Invite your friends to your thrift there with email" [(ngModel)]="email" (keyup)="checkCondition(post.duration)">   
+</div> <br>
+<small class="font-weight-bold text-danger" *ngIf="Invitenotify=='bad'">You cannot invite yourself</small>
+<small class="font-weight-bold text-danger" *ngIf="Invitenotify=='notfound'">User not found</small>
+<small class="font-weight-bold text-primary" *ngIf="Invitenotify=='sent'">Invite sent, you'll be notified when your friend accepts or rejects your invites</small>
+<div *ngIf="processing" class="text-center">
+<app-loader></app-loader>
+</div> <br> <br>
+<div class="text-center animate__animated animate__fadeIn">
+<button class="btn text-white font-weight-bold shadow btn-sm" (click)="SendInvite()">
+<span>Invite</span>
+<i class="bi bi-arrow-right"></i>
+</button>
+</div>
+
+</section>
+</ng-container>        
+</div>
+<div class="col-md-5 mt-5">
+<small class="font-weight-bold">Sent Invites</small>
+<div class="alert alert-primary justify-content-center bg-transparent" role="alert">
+    <p  *ngFor="let post of myInvites">
+        <small class="font-weight-bold"  *ngIf="ajoId==post.ajo_id && myInvites.length>0"><i class="fas fa-thumbs-up"></i> You've invited {{post.invitee_name}} to your thrift <span><small class="text-danger float-right font-weight-bold">Pending</small></span></small>
+    </p>
+
+</div>
+<div class="text-center animate__animated animate__fadeIn">
+    <button class="btn text-white font-weight-bold shadow btn-sm" (click)="SendInvite()">
+    <span>Start</span>
+    <i class="bi bi-arrow-right"></i>
+    </button>
+    </div>
+
+</div>  
+
+
+</div>
+<div>

@@ -1,0 +1,62 @@
+<div class="container">
+<div class="row">
+<div class="col">
+<section>
+<div class="col mx-auto text-left">
+<div class="w-80 mt-5">
+<div class="alert alert-danger text-center bg-transparent" role="alert" *ngIf="notify=='bad'" >
+<small class="font-weight-bold justify-content-center"> Your email is yet to be verified, you won't be able to create a thrift untill you do <span (click)="Verify()" type="submit"class="text-dark">Click to verify Now</span></small>
+</div>
+<p class="font-weight-bold animate__animated animate__fadeIn"><i class="fas fa-plus fa-1x txt"></i> Create a thrfit and start to invite your friends</p> 
+<div class="animate__animated animate__zoomIn">
+<label class="font-weight-bold txt">Title</label>
+<input type="text" class="form-control border-top-0 border-left-0 border-right-0 rounded-0 inpu font-italic txt" aria-label="Small" aria-describedby="inputGroup-sizing-sm"   placeholder="Thrift title" [(ngModel)]="title">  
+</div> <br>
+
+<div class="animate__animated animate__zoomIn">
+<label class="font-weight-bold txt">Description</label>
+<input type="text" class="form-control border-top-0 border-left-0 border-right-0 rounded-0 inpu font-italic txt" aria-label="Small" aria-describedby="inputGroup-sizing-sm"   placeholder="Description" [(ngModel)]="describe">   
+</div> <br>
+
+
+<div class="animate__animated animate__zoomIn">
+    <label class="font-weight-bold txt">Type</label>
+    <form [formGroup]="typeForm">
+    <select class="form-control" formControlName="typeControl">
+    <option [value]="types" *ngFor="let types of thrifttypes">  {{types}}</option>
+    </select>
+    </form>
+    
+    </div> <br>
+
+<div class="animate__animated animate__zoomIn">
+<label class="font-weight-bold txt">Amount</label>
+<input type="number" class="form-control border-top-0 border-left-0 border-right-0 rounded-0 inpu font-italic txt" aria-label="Small" aria-describedby="inputGroup-sizing-sm"   placeholder="Individual contribution per the type chosen" [(ngModel)]="amount">   
+</div> <br>
+
+
+<div class="animate__animated animate__zoomIn">
+<label class="font-weight-bold txt">Duration<small class="font-weight-bold">:How Long?</small></label> 
+<input type="number" class="form-control border-top-0 border-left-0 border-right-0 rounded-0 inpu font-italic txt" aria-label="Small" aria-describedby="inputGroup-sizing-sm"  placeholder="This determines the number of friends you can invite" [(ngModel)]="duration"> 
+</div> <br>
+<p class="font-weight-bold txt" *ngIf="duration>0"><i class="fas fa-info-circle"></i> You can only Invite <span class="text-danger">{{duration-1}}</span> friends</p>
+
+<small class="font-weight-bold text-danger" *ngIf="note=='bad'">Please Fill all Inputs</small>
+<small class="font-weight-bold text-info" *ngIf="note=='good'">Successfully Posted</small>
+<div *ngIf="processing" class="text-center">
+    <app-loader></app-loader>
+    </div> <br>
+<div class="text-center animate__animated animate__fadeIn">
+<button class="btn text-white font-weight-bold shadow" [disabled]="notify=='bad'" (click)="createThrift()">
+<span>Proceed</span>
+<i class="bi bi-arrow-right"></i>
+</button>
+</div>
+
+</div>
+</div>
+</section>
+</div>
+</div>
+</div>
+

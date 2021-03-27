@@ -1,0 +1,30 @@
+<div class="container">
+    <div class="row mt-5">
+        <div class="col">
+<section>
+<form>
+<p class="font-weight-bold">Verify your email</p>
+<h6 class=" animate__animated animate__fadeIn font-weight-bold">A verification code has been sent to {{email}}</h6> <br>
+<div class="animate__animated animate__zoomIn">
+<label class="font-weight-bold">Enter your verification code</label>
+<input type="number" class="form-control border-top-0 border-left-0 border-right-0 rounded-0 inpu font-italic" aria-label="Small" aria-describedby="inputGroup-sizing-sm"  name="code" placeholder="verification code" [(ngModel)]="code">   
+</div> <br>
+<small type="submit" class="txt font-weight-bold" (click)="resendCode()">Resend Code</small> <br>
+<small *ngIf="response=='correct'" class="text-primary font-weight-bold">Verification code correct</small>
+<small *ngIf="response=='incorrect'" class="text-danger font-weight-bold">Verification code incorrect</small>
+<small *ngIf="response=='verified'" class="text-danger font-weight-bold">Account already verified: <span type="button"class="text-primary ml-1" routerLink="/login">Login Instead</span></small>
+<small *ngIf="response=='codesent'" class="text-primary font-weight-bold">Verification Code sent</small>
+<small *ngIf="response=='notexist'" class="text-danger font-weight-bold">Email not found: <span type="button"class="text-primary ml-1" routerLink="/signup">Signup Instead</span></small><br>
+<div *ngIf="processing" class="text-center">
+<app-loader></app-loader>
+</div> <br>
+<div class="text-center animate__animated animate__fadeIn">
+<button (click)="verifyCode()" type="submit" class="btn border-0 outline-0 btn-sm pt-1"><i class="far fa-arrow-alt-circle-right fa-2x icon text-light"></i></button>
+</div>  
+</form>
+</section>
+            
+</div>
+</div>
+</div>
+

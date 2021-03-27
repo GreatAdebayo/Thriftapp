@@ -1,0 +1,71 @@
+<div class="container">
+<div class="row">
+<div class="col">
+<section>
+<div class="col mx-auto text-left">
+<form class="w-80 mt-5" [formGroup]="userForm" (submit)="firstForm()">
+<p class="font-weight-bold animate__animated animate__fadeIn">Personal and Contact Informations</p>
+<div class="animate__animated animate__zoomIn">
+<label class="font-weight-bold txt">First Name</label>
+<input type="text" class="form-control border-top-0 border-left-0 border-right-0 rounded-0 inpu font-italic txt" aria-label="Small" aria-describedby="inputGroup-sizing-sm"  name="firstname" placeholder="Firstname" formControlName="firstName">  
+</div> <br>
+
+<div class="animate__animated animate__zoomIn">
+<label class="font-weight-bold txt">Last Name</label>
+<input type="text" class="form-control border-top-0 border-left-0 border-right-0 rounded-0 inpu font-italic txt" aria-label="Small" aria-describedby="inputGroup-sizing-sm"  name="lastname" placeholder="Lastname" formControlName="lastName">   
+</div> <br>
+
+<div class="animate__animated animate__zoomIn">
+<label class="font-weight-bold txt">Middle Name</label>
+<input type="text" class="form-control border-top-0 border-left-0 border-right-0 rounded-0 inpu font-italic txt" aria-label="Small" aria-describedby="inputGroup-sizing-sm"  name="middlename" placeholder="Middlename" formControlName="middleName">   
+</div> <br>
+
+<div class="animate__animated animate__zoomIn ">
+<label class="font-weight-bold txt">DOB</label>
+<input type="text" class="form-control border-top-0 border-left-0 border-right-0 rounded-0 inpu font-italic txt" aria-label="Small" aria-describedby="inputGroup-sizing-sm"  name="dob" placeholder="Date of Birth" formControlName="dob">   
+</div> <br>
+
+<div class="animate__animated animate__zoomIn">
+<label class="font-weight-bold txt">Home Address</label>
+<input type="address" class="form-control border-top-0 border-left-0 border-right-0 rounded-0 inpu font-italic txt" aria-label="Small" aria-describedby="inputGroup-sizing-sm"  name="address" placeholder="Address" formControlName="address">   
+</div> <br>
+
+<div class="animate__animated animate__zoomIn">
+<label class="font-weight-bold txt">Phone Number</label>
+<input type="tel" class="form-control border-top-0 border-left-0 border-right-0 rounded-0 inpu font-italic txt" aria-label="Small" aria-describedby="inputGroup-sizing-sm"  name="number" placeholder="Phone Number" formControlName="phone">   
+</div> <br>
+
+<div class="animate__animated animate__fadeIn">
+<label class="font-weight-bold txt">Gender</label>
+<input type="text" class="form-control border-top-0 border-left-0 border-right-0 rounded-0 inpu font-italic txt" aria-label="Small" aria-describedby="inputGroup-sizing-sm"  name="gender" placeholder="Gender" formControlName="gender">  
+</div> <br>
+
+<div class="animate__animated animate__fadeIn">
+<label class="font-weight-bold txt">Email Address</label>
+<input type="email" class="form-control border-top-0 border-left-0 border-right-0 rounded-0 inpu font-italic" aria-label="Small" aria-describedby="inputGroup-sizing-sm"  name="email" placeholder="Email" formControlName="email">   
+</div> <br>
+
+<div class="animate__animated animate__fadeIn">
+<label class="font-weight-bold"><i class="fas fa-lock-alt txt"></i> Password</label>
+<input type="password" class="form-control border-top-0 border-left-0 border-right-0 rounded-0 inpu font-italic" aria-label="Small" aria-describedby="inputGroup-sizing-sm"  name="password" placeholder="Password" formControlName="password">   
+</div> <br>
+
+<small class="font-weight-bold text-danger" *ngIf="notvalid">Please fill in all informations</small>
+<small class="font-weight-bold text-danger" *ngIf="showexists">{{exists}}<span type="button"class="text-primary ml-2" routerLink="/login">Login Instead</span></small>
+<small class="font-weight-bold text-success" *ngIf="showsuccess" (click)="sendCode()">{{success}}</small> <br>
+<small class="font-weight-bold text-danger" *ngIf="verifyCodeSent=='error'">Error sending verification code</small>
+<small class="font-weight-bold text-danger" *ngIf="verifyCodeSent=='Email not found'">Email not found</small>
+<div *ngIf="processing" class="text-center">
+<app-loader></app-loader>
+</div> <br>
+<div class="text-center animate__animated animate__fadeIn">
+<button type="submit" class="btn border-0 outline-0 btn-sm pt-1"><i class="far fa-arrow-alt-circle-right fa-2x icon text-light"></i></button>
+</div>
+</form>
+</div>
+</section>
+
+</div>
+</div>
+</div>
+

@@ -1,0 +1,59 @@
+
+<section>
+<div class="container">
+<div class="row mt-5">
+<div class="col">
+<img [src]="baseurl+profilepic" alt="..." class="rounded-circle" style="width: 80px; height: 80px;"><br>
+<label class="btn ml-2 mt-1 btn-sm text-white font-weight-bold">
+Choose <input type="file" hidden (change)="onFileChanged($event)">
+</label>
+<small class="font-weight-bold ml-1" type="submit" (click)="uploadFile()">Upload</small> <br> 
+<small class="font-weight-bold text-info" *ngIf="!status"> {{uploadInfo}}</small>  
+<small class="font-weight-bold text-info" *ngIf="status=='good'"> Picture successfully uploaded </small>
+<small class="font-weight-bold text-danger" *ngIf="status=='bad'"> Picture not uploaded </small>
+</div>
+</div>
+
+
+<div class="row">
+<div class="col-lg-6 d-flex flex-column  justify-content-center animate__animated animate__fadeIn animate__slower mt-4 mb-2">
+<small class="font-weight-bold txt">Personal Informations</small> <br>
+<ul class="list-group">
+<li class="list-group-item font-weight-bold border-0"><i class="fas fa-user"></i> {{firstname}} {{lastname}} {{middlename}}</li><br>
+<li class="list-group-item font-weight-bold border-0"><i class="fas fa-phone-square-alt"></i> {{phone}}</li><br>
+<li class="list-group-item font-weight-bold border-0"><i class="fas fa-genderless"></i> {{gender}}</li><br>
+<li class="list-group-item font-weight-bold border-0"><i class="fas fa-envelope"></i> {{email}}</li><br>
+<li class="list-group-item font-weight-bold border-0"><i class="fas fa-clock"></i> {{dob}}</li><br>
+</ul>
+</div>
+<div class="col-lg-6 d-flex flex-column hero-img animate__animated animate__fadeIn  justify-content-center mb-5">
+    <p>  
+    <button class="btn text-white font-weight-bold" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+        Bank Account Settings
+      </button>
+    </p>
+    <div class="collapse" id="collapseExample">
+      <div class="card card-body">
+        <div class="animate__animated animate__fadeIn">
+            <label class="font-weight-bold txt">Bank Name</label>
+            <input type="text" class="form-control border-top-0 border-left-0 border-right-0 rounded-0 inpu font-italic txt" aria-label="Small" aria-describedby="inputGroup-sizing-sm"  name="lastname" placeholder="Bank Name" formControlName="lastName">   
+            </div> <br>
+            
+            <div class="animate__animated animate__fadeIn">
+            <label class="font-weight-bold txt">Account Name</label>
+            <input type="text" class="form-control border-top-0 border-left-0 border-right-0 rounded-0 inpu font-italic txt" aria-label="Small" aria-describedby="inputGroup-sizing-sm"  name="lastname" placeholder="Account Name" formControlName="lastName">   
+            </div> <br>
+            
+            
+            <div class="text-center animate__animated animate__fadeIn">
+            <a class="btn text-white font-weight-bold shadow">
+            <span>Add Bank</span>
+            <i class="bi bi-arrow-right"></i>
+            </a>
+            </div>
+      </div>
+    </div>
+</div>
+</div>
+</div>
+</section>

@@ -1,0 +1,46 @@
+<div class="container">
+<div class="row">
+<div class="col">
+<section>
+<div class="col mx-auto text-left">
+<div class="w-80 mt-5">
+<div class="alert alert-danger text-center justify-content-center text-center bg-transparent" role="alert"  *ngIf="notify=='bad'">
+<small class="font-weight-bold  animate__animated animate__fadeIn"> Your email is yet to be verified, you won't be able to withdraw from your wallet untill you do <span type="submit"  (click)="Verify()" class="text-dark">Click to verify Now</span></small>
+</div>
+<p class="font-weight-bold animate__animated animate__fadeIn">Withdraw to your Bank <i class="fab text-primary fa-cc-mastercard fa-1x"></i><i class="fab ml-2 fa-cc-visa fa-1x text-primary"></i></p> 
+<div class="animate__animated animate__zoomIn">
+<label class="font-weight-bold txt">Amount</label>
+<input type="number" class="form-control border-top-0 border-left-0 border-right-0 rounded-0 inpu font-italic txt" aria-label="Small" aria-describedby="inputGroup-sizing-sm"  name="Amount" placeholder="Amount">  
+</div> <br>
+
+<div class="animate__animated animate__zoomIn">
+<label class="font-weight-bold txt">Account Number</label>
+<input type="number" class="form-control border-top-0 border-left-0 border-right-0 rounded-0 inpu font-italic txt" aria-label="Small" aria-describedby="inputGroup-sizing-sm"  name="lastname" placeholder="Account number">   
+</div> <br>
+
+<div class="animate__animated animate__zoomIn">
+<label class="font-weight-bold txt">Bank Name</label>
+<input type="text" class="form-control border-top-0 border-left-0 border-right-0 rounded-0 inpu font-italic txt" aria-label="Small" aria-describedby="inputGroup-sizing-sm"  name="lastname" placeholder="Bank Name" >   
+</div> <br>
+
+<div class="animate__animated animate__zoomIn">
+<label class="font-weight-bold txt">Account Name</label>
+<input type="text" class="form-control border-top-0 border-left-0 border-right-0 rounded-0 inpu font-italic txt" aria-label="Small" aria-describedby="inputGroup-sizing-sm"  name="lastname" placeholder="Account Name" >   
+</div> <br>
+
+
+<div class="text-center animate__animated animate__fadeIn">
+<button class="btn text-white font-weight-bold shadow" [disabled]="notify=='bad'">
+<span>Proceed</span>
+<i class="bi bi-arrow-right"></i>
+</button>
+</div>
+
+
+</div>
+</div>
+</section>
+</div>
+</div>
+</div>
+

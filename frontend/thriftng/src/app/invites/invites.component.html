@@ -1,0 +1,22 @@
+<div class="container">
+<div class="row mt-5">
+<div class="col-md">
+<section>
+<div class="alert alert-danger  justify-content-center bg-transparent text-center" role="alert" *ngIf="notify=='bad'">
+<small class="font-weight-bold  animate__animated animate__fadeIn"> Your email is yet to be verified, you won't be able to accept invites untill you do <span type="submit"  (click)="Verify()" class="text-dark">Click to verify Now</span></small>
+</div>
+<p class="font-weight-bold text-danger animate__animated animate__fadeIn">Pending Invites from your friends</p>
+<ng-container *ngFor="let post of myInvites"> 
+<ul class="list-group-flush animate__animated animate__fadeIn" *ngIf="userId==post.invitee_id">
+<li class="list-group-item"><small class="font-weight-bold">Your friend <span class="text-primary">{{post.inviter_name}}</span> Invites you to join there Thrift <span class="ml-5 text-info">{{post.time}}</span> </small> <i class="fas fa-info-circle float-right text-primary"></i></li><br>
+
+</ul>
+</ng-container>
+</section>
+</div>
+</div>
+</div>
+<!-- 
+
+
+<i class="fas fa-vote-nay float-right ml-4 text-danger"></i> <i class="text-primary fas fa-comment-alt-check float-right"></i> -->

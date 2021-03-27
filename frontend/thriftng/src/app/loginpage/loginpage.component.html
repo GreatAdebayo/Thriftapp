@@ -1,0 +1,98 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light shadow fixed-top py-3 animate__animated animate__fadeInDown animate__fast">
+<div class="container">
+<a routerLink="/" class="logo navbar-brand">
+<img src="assets/img/logo.png" alt="">
+<span class="navtext ml-1">Thrift.ng</span>
+</a>
+<ul class="navbar-nav float-between ml-auto">
+<li class="nav-item">
+<button class="btn btn-sm font-weight-bold px-3 py-2 log">LOGIN PAGE<i class="bi bi-arrow-right"></i></button>
+</li>
+</ul>     
+</div>
+</nav>
+
+<section>
+<div class="container">
+<div class class="row mt-5">
+<div class="col-lg-5 hero-img animate__animated animate__zoomIn animate__slower d-none d-lg-block">
+<img src="assets/img/features-3.png" class="img-fluid" alt="">
+</div>
+
+<div class="col-lg-7 mt-2 d-flex flex-column justify-content-center animate__animated animate__fadeIn animate__slower">
+<h6 class=" animate__animated animate__fadeIn font-weight-bold">Please provide your Login Details</h6> <br>
+<div class="animate__animated animate__zoomIn">
+<p class="font-weight-bold"><i class="fas fa-user txt"></i> Email</p>
+<input type="email" class="form-control border-top-0 border-left-0 border-right-0 rounded-0 inpu font-italic txt" aria-label="Small" aria-describedby="inputGroup-sizing-sm"  name="email" placeholder="Email" [(ngModel)]="email"> <br>   
+</div>
+<div class="animate__animated animate__zoomIn animate__delay-1s">
+<p class="font-weight-bold"><i class="fas fa-lock-alt txt"></i> Password</p>
+<input type="password" class="form-control border-top-0 border-left-0 border-right-0 rounded-0 inpu font-italic txt" aria-label="Small" aria-describedby="inputGroup-sizing-sm"  name="password" placeholder="Password" [(ngModel)]="password">   
+</div><br>
+<small type="submit" class="txt font-weight-bold animate__animated animate__fadeIn animate__delay-2s" data-toggle="modal" data-target="#exampleModal">Reset password</small>
+<br>
+<small *ngIf="response=='good'" class="text-primary font-weight-bold">Login Details Correct</small>
+<small *ngIf="response=='bad'" class="text-danger font-weight-bold">Login Details Incorrect</small>
+<small *ngIf="response=='empty'" class="text-danger font-weight-bold">Type in your Login details</small>
+<div *ngIf="processing" class="text-center">
+<app-loader></app-loader>
+</div> <br>
+<div class="text-center animate__animated animate__fadeIn">
+<button (click)="loginUser()" type="submit" class="btn border-0 outline-0 btn-sm pt-1"><i class="far fa-arrow-alt-circle-right fa-2x icon text-light"></i></button>
+</div>
+
+
+
+
+</div>
+</div>
+</div>
+</section>
+
+
+
+<!-- RESET PASSWORD SECTION -->
+<div class="modal" tabindex="-1" role="dialog" id="exampleModal">
+<div class="modal-dialog" role="document">
+<div class="modal-content border-0">
+<div class="modal-header shadow">
+<a>
+<img src="assets/img/logo.png" alt="">
+<small class="navtext ml-1 font-weight-bold">Thrift.ng</small>
+</a>
+<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+<span aria-hidden="true">&times;</span>
+</button>
+</div>
+<div class="modal-body">
+<h6 class="animate__animated animate__fadeIn font-weight-bold">Reset your password</h6>
+<small class="font-weight-bold text-danger" *ngIf='resetInfo == "empty"'>Please Enter your email</small>  
+<small class="font-weight-bold text-danger" *ngIf='resetInfo == "bad"'>Email cannot be found <span type="submit" class="ml-1 text-info font-weight-bold" routerLink="/signup" data-dismiss="modal">Signup Instead</span></small>  
+<br>
+<div class="animate__animated animate__fadeIn">
+<p class="font-weight-bold"><i class="fas fa-user txt"></i> Email</p>
+<input type="email" class="form-control border-top-0 border-left-0 border-right-0 rounded-0 inpu font-italic txt" aria-label="Small" aria-describedby="inputGroup-sizing-sm"  name="email" placeholder="Email" [(ngModel)]="newemail" [disabled]="resetInfo == 'good'" (keyup)="resetPassword()">
+<small class="font-weight-bold text-info" *ngIf='resetInfo=="good"'>An OTP has been sent to your email</small> <br>   
+</div> <br>
+<div class="animate__animated animate__fadeIn" *ngIf='resetInfo=="good"'>
+<p class="font-weight-bold"><i class="fas fa-lock-open txt"></i>OTP</p>
+<input type="number" class="form-control border-top-0 border-left-0 border-right-0 rounded-0 inpu font-italic txt" aria-label="Small" aria-describedby="inputGroup-sizing-sm"  name="otp" placeholder="Enter OTP" [(ngModel)]="otp">   
+</div><br>
+
+<div class="animate__animated animate__fadeIn" *ngIf='resetInfo=="good"'>
+<p class="font-weight-bold"><i class="fas fa-lock-alt txt"></i> Password</p>
+<input type="password" class="form-control border-top-0 border-left-0 border-right-0 rounded-0 inpu font-italic txt" aria-label="Small" aria-describedby="inputGroup-sizing-sm"  name="password" placeholder="New Password" [(ngModel)]="newpassword">   
+</div><br>
+<small class="font-weight-bold text-info" *ngIf='pwdchanged'>Password successfully changed</small>  
+<small class="font-weight-bold text-danger" *ngIf='otpwrong'>Wrong or Expired OTP</small> <br> 
+<small class="font-weight-bold text-danger" *ngIf='otpexpire'>Please fill in all details</small>  
+<div class="text-center animate__animated animate__fadeIn" *ngIf='resetInfo=="good"'>
+<button  type="submit" class="btn border-0 outline-0 btn-sm pt-1"><i class="far fa-arrow-alt-circle-right fa-2x icon text-light" (click)="updatePass()"></i></button>
+</div>
+<br>
+</div>
+</div>
+</div>
+</div>
+
+<!-- RESET PASSWORD SECTION -->

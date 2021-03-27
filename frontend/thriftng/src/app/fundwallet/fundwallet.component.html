@@ -1,0 +1,55 @@
+
+<div class="container">
+<div class="row">
+<div class="col">
+<section>
+<div class="col mx-auto text-left">
+<div class="w-80 mt-5">
+<div class="alert alert-danger text-center bg-transparent text-center" role="alert" *ngIf="notify=='bad'">
+<small class="font-weight-bold justify-content-center"> Your email is yet to be verified, you won't be able to fund your wallet untill you do <span type="submit" (click)="Verify()" class="text-dark">Click to verify Now</span></small>
+</div>
+<p class="font-weight-bold animate__animated animate__fadeIn">Fund Your Wallet <i class="fab text-primary fa-cc-mastercard fa-1x"></i><i class="fab ml-2 fa-cc-visa fa-1x text-primary"></i></p> 
+<div class="animate__animated animate__zoomIn">
+<label class="font-weight-bold txt">Amount</label>
+<input type="number" class="form-control border-top-0 border-left-0 border-right-0 rounded-0 inpu font-italic txt" aria-label="Small" aria-describedby="inputGroup-sizing-sm"  name="Amount" placeholder="Amount" [(ngModel)]="amount">  
+</div> <br>
+
+<div class="animate__animated animate__zoomIn">
+<label class="font-weight-bold txt">Card Number</label>
+<input type="number" class="form-control border-top-0 border-left-0 border-right-0 rounded-0 inpu font-italic txt" aria-label="Small" aria-describedby="inputGroup-sizing-sm"  name="Amount" placeholder="Card Number">  
+</div> <br>
+
+<div class="animate__animated animate__zoomIn">
+<label class="font-weight-bold txt">CVV</label>
+<input type="number" class="form-control border-top-0 border-left-0 border-right-0 rounded-0 inpu font-italic txt" aria-label="Small" aria-describedby="inputGroup-sizing-sm"  name="Amount" placeholder="Security code">  
+</div> <br>
+<div class="animate__animated animate__zoomIn">
+<label class="font-weight-bold txt">Expiring Date</label>
+<input type="number" class="form-control border-top-0 border-left-0 border-right-0 rounded-0 inpu font-italic txt" aria-label="Small" aria-describedby="inputGroup-sizing-sm"  name="Amount" placeholder="Expiring Date">  
+</div> <br>
+<div class="animate__animated animate__zoomIn">
+<label class="font-weight-bold txt">Password</label>
+<input type="text" class="form-control border-top-0 border-left-0 border-right-0 rounded-0 inpu font-italic txt" aria-label="Small" aria-describedby="inputGroup-sizing-sm"  name="Amount" placeholder="Password">  
+</div> <br>
+
+<div *ngIf="processing" class="text-center">
+<app-loader></app-loader>
+</div> <br>
+<small class="font-weight-bold justify-content-center text-danger" *ngIf='note=="bad"'>Please Fill all Inputs</small>
+<small class="font-weight-bold justify-content-center text-primary" *ngIf='note=="good"'>Wallet Successfully Funded</small>
+<div class="text-center animate__animated animate__fadeIn">
+<button class="btn text-white font-weight-bold shadow" [disabled]="notify=='bad'" (click)="fundUserWallet()">
+<span>Proceed</span>
+<i class="bi bi-arrow-right"></i>
+</button>
+</div>
+
+</div>
+</div>
+</section>
+</div>
+</div>
+</div>
+
+
+
