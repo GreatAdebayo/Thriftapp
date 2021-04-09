@@ -3,17 +3,20 @@
 <p class="font-weight-bold txt">My Thrifts</p>
 <div class="row">
 <div class="col-md" *ngFor="let i = index; let post of ajopost">
-        <div class="frontside animate__animated animate__fadeIn">
-            <div class="card border-0">
-            <div class="card-body text-center d-iline">
-            <p class="font-weight-bold txt">{{i+1}}</p><br>
-            <p><img class=" img-fluid" src="assets/img/card.png" alt="card image"></p>
-            <p class="card-title font-weight-bold">{{post.title}}</p>
-            <a class="btn btn-sm font-weight-bold text-white" (click)="details(post.ajo_id)">Details <i class="bi bi-arrow-right"></i></a> <br> <br>
-            <small class="font-weight-bold text-primary">Status: {{post.status}}</small>
-            </div>
-            </div><br>
-            </div>
+<div class="frontside animate__animated animate__fadeIn">
+<div class="card border-0">
+<div class="card-body text-center d-iline">
+<i class="fas fa-trash text-danger float-left"></i>
+<p class="font-weight-bold txt">{{i+1}}</p>
+<br>
+<p><img class=" img-fluid" src="assets/img/card.png" alt="card image"></p>
+<p class="card-title font-weight-bold">{{post.title}}</p>
+<a class="btn btn-sm font-weight-bold text-white" (click)="details(post.ajo_id)">Details <i class="bi bi-arrow-right"></i></a> <br> <br>
+<small class="font-weight-bold" [class]="post.status=='Ongoing'? 'text-primary':post.status=='Pending'?'text-danger':''">{{post.status}}</small>
+
+</div>
+</div><br>
+</div>
 </div>
 </div>
 </div>

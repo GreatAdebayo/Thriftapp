@@ -25,17 +25,21 @@ public thrift = {};
 public members: any;
 public baseUrl = environment.baseUrl
 public note = '';
-public processing = false;
+ public processing = false;
+ public type = ''
 
 
 Verify() {
 this.router.navigate(['/signup/emailverify'])
 
 }
-
+ checkType() {
+  let typedetails = this.typeForm.value;
+  this.type  = typedetails.typeControl;
+}
 createThrift() {
 let typedetails = this.typeForm.value;
-let type = typedetails.typeControl;
+ let type = typedetails.typeControl;
 if (this.title && this.describe && this.amount && this.duration && type) {
 this.members = this.duration - 1;
 this.thrift = {userid:this.userId, title: this.title, describe:this.describe, amount:this.amount, duration:this.duration, type:type, member:this.members}

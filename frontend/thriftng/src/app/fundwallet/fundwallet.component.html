@@ -6,7 +6,7 @@
 <div class="col mx-auto text-left">
 <div class="w-80 mt-5">
 <div class="alert alert-danger text-center bg-transparent text-center" role="alert" *ngIf="notify=='bad'">
-<small class="font-weight-bold justify-content-center"> Your email is yet to be verified, you won't be able to fund your wallet untill you do <span type="submit" (click)="Verify()" class="text-dark">Click to verify Now</span></small>
+<small class="font-weight-bold justify-content-center"><i class="fas fa-bell-exclamation"></i>  Your email is yet to be verified, you won't be able to fund your wallet untill you do <span (click)="Verify()" class="text-dark">Click to verify Now</span></small>
 </div>
 <p class="font-weight-bold animate__animated animate__fadeIn">Fund Your Wallet <i class="fab text-primary fa-cc-mastercard fa-1x"></i><i class="fab ml-2 fa-cc-visa fa-1x text-primary"></i></p> 
 <div class="animate__animated animate__zoomIn">

@@ -18,9 +18,10 @@ public addItems(notify) {
 this.http.post<any>(`${this.baseUrl}confirmemailverify.php`, JSON.stringify(notify)).subscribe(
 data => {
 this.balance = data.Balance
-this.mybalance.next(this.balance);
+this.mybalance.next(this.balance);//to be used later
+        
 this.email = data.Email;
-if(data.Verified) {
+if(data.Verified){
 this.notify = 'good' 
 }
 else if (data.Notverified) {
@@ -32,6 +33,7 @@ this.notifyme.next(this.notify);
 )
 
 }
+    
 constructor(public http: HttpClient) {
 
 }

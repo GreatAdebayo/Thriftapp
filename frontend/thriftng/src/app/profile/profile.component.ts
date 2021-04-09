@@ -46,6 +46,10 @@ this.status = 'bad'
 } else if (data.Large) {
 this.status = 'large'
 }
+ setTimeout(()=>this.router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
+   this.router.navigate(['/dashboard/profile']);
+}), 300)
+   
 }
 )
 

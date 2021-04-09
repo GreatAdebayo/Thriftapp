@@ -1,22 +1,58 @@
 <div class="container">
 <div class="row mt-5">
-<div class="col-md">
+<div class="col">
 <section>
 <div class="alert alert-danger  justify-content-center bg-transparent text-center" role="alert" *ngIf="notify=='bad'">
-<small class="font-weight-bold  animate__animated animate__fadeIn"> Your email is yet to be verified, you won't be able to accept invites untill you do <span type="submit"  (click)="Verify()" class="text-dark">Click to verify Now</span></small>
+<small class="font-weight-bold  animate__animated animate__fadeIn"><i class="fas fa-bell-exclamation"></i>  Your email is yet to be verified, you won't be able to see the details of the invites untill you do <span  (click)="Verify()" class="text-dark">Click to verify Now</span></small>
 </div>
 <p class="font-weight-bold text-danger animate__animated animate__fadeIn">Pending Invites from your friends</p>
-<ng-container *ngFor="let post of myInvites"> 
-<ul class="list-group-flush animate__animated animate__fadeIn" *ngIf="userId==post.invitee_id">
-<li class="list-group-item"><small class="font-weight-bold">Your friend <span class="text-primary">{{post.inviter_name}}</span> Invites you to join there Thrift <span class="ml-5 text-info">{{post.time}}</span> </small> <i class="fas fa-info-circle float-right text-primary"></i></li><br>
-
+<div *ngFor="let post of myInvites"> 
+<ul class="list-group animate__animated animate__fadeIn" *ngIf="userId==post.invitee_id">
+<li class="list-group-item"><small class="font-weight-bold">Your friend <span class="text-primary">{{post.inviter_name}}</span> Invites you to join there Thrift <span class="ml-5 text-secondary">{{post.time}}</span> <span class="ml-2" [class]="post.status=='Accepted'? 'text-primary':post.status=='Rejected'?'text-danger':post.status=='Pending'?'text-info':''">{{post.status}}</span> </small> <a class="float-right text-primary font-weight-bold" data-toggle="modal" data-target="#exampleModal" (click)="details(post.ajo_id)" [disabled]="notify=='bad'"> <i class="fas fa-info-circle text-primary mr-1"></i><small>Details</small></a>
+</li><br>
 </ul>
-</ng-container>
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+        <div class="modal-content">
+        <div class="modal-header justify-content-center">
+        <h6 class="modal-title font-weight-bold " id="exampleModalLabel"><i class="fas fa-info-circle"></i> Thrift Details</h6>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+        </button>
+        </div>
+        <div class="modal-body justify-content-center">
+        <p class="font-weight-bold"><span class="txt">Title:</span> {{title.toUpperCase()}}</p>
+        <p class="font-weight-bold"><span class="txt">Describtion:</span> {{describ}}</p>
+        <p class="font-weight-bold"><span class="txt">Type:</span> {{type}}</p>
+        <p class="font-weight-bold"><span class="txt">Duration:</span> {{duration}}{{type=='Daily'?'days':type=='Weekly' ? 'weeks': type=='Monthly'? 'months':''}}</p>
+        <p class="font-weight-bold"><span class="txt">Amount:</span>  ₦{{amount}}</p>
+        <small class="font-weight-bold text-danger" *ngIf="requestnotify=='insufficient'"><i class="fas fa-info-circle"></i> You don't have enough funds to join this thrift, please fund your wallet</small> 
+        <small class="font-weight-bold text-primary" *ngIf="requestnotify=='accepted'"> Request Accepted, Kindly Check your accepted requests below</small>
+        <small class="font-weight-bold text-danger" *ngIf="requestnotify=='already'"> Request Already Accepted, Kindly Check your accepted requests below</small> 
+        <small class="font-weight-bold text-danger" *ngIf="requestnotify=='alreadyrejected'"> Request Already Rejected</small> 
+        <small class="font-weight-bold text-danger" *ngIf="requestnotify=='rejected'"> Request Rejected</small><br>
+                <div *ngIf="processing" class="text-center">
+                        <app-loader></app-loader>
+                        </div> <br>
+        
+        <div class="modal-footer">      
+        <button type="button" class="bg-primary border-0 btn-sm text-light font-weight-bold"  (click)="accept(post.invitee_id)" > <i class="fas fa-comment-alt-check"></i> Accept</button>
+        <button type="button" class="bg-danger btn-sm border-0 text-light font-weight-bold" (click)="reject(post.invitee_id)"><i class="fas fa-vote-nay"></i> Reject</button>
+        </div>
+        </div>
+        </div>
+</div>
+</div>
+
+
+
+</div>
 </section>
 </div>
 </div>
 </div>
-<!-- 
 
 
-<i class="fas fa-vote-nay float-right ml-4 text-danger"></i> <i class="text-primary fas fa-comment-alt-check float-right"></i> -->
+
+
+

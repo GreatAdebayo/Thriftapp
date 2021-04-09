@@ -85,3 +85,14 @@ font-family: "Nunito", sans-serif;
 
 
 
+.bg-purple{
+    background-color: #4154F1;
+}
+
+.toast-custom {
+
+    top: 80px;
+    
+    right: 80px;
+    
+    }

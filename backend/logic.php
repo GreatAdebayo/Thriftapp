@@ -32,9 +32,15 @@ $check = $this->conn->query($aleadyExistsSql);
 if($check->num_rows > 0){
 $notify['Exists'] = 'Email or phone number already exists';}
 else{
-$successSubmission = $this->conn->query("INSERT INTO users_tb(firstname, lastname, middlename, dob, address, phone, gender, email, password, wallet) 
+$profilepicname = '';
+if($gender == 'Male'){
+$profilepicname = 'male.jpeg';
+}elseif($gender == 'Female'){
+$profilepicname = 'female.jpeg';
+}
+$successSubmission = $this->conn->query("INSERT INTO users_tb(firstname, lastname, middlename, dob, address, phone, gender, email, password, wallet, profilepic) 
 VALUES ('$firstname', '$lastname', '$middlename', '$dob', '$address', '$phone', 
-'$gender', '$email', '$password', '0')"); 
+'$gender', '$email', '$password', '0', '$profilepicname')"); 
 if($successSubmission){
 $notify['Success'] = 'Account created, Click to verify your email';
 }else{
@@ -54,6 +60,17 @@ $userId = $myFetchedUser['user_id'];
 $name = $myFetchedUser['lastname'];
 $codestatus = 'act';
 $sendCode = $this->conn->query("INSERT INTO emailverify(user_id, vericode, status)VALUES ('$userId', '$code', '$codestatus')");
+$htmlContent =' 
+    <html> 
+    <body> 
+        <h2>Confirmation Code</h2> 
+        <table cellspacing="0" style="border: 2px  dashed  #4154F1; width: 100%;"> 
+            <tr> 
+        <td style="color:#4154F1;">1234</td> 
+            </tr> 
+        </table> 
+    </body> 
+    </html>';
 $mail = new PHPMailer(true);
 try {
 //Server settings
@@ -80,7 +97,7 @@ $mail->addAddress($email);
 
 $mail->isHTML(true);                                  
 $mail->Subject = 'Confirmation code';
-$mail->Body    = 'Your verification code is'.' '.$code;
+$mail->Body    = $htmlContent;
 $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
 
 $mail->send();
@@ -138,6 +155,18 @@ $userId = $myFetchedUser['user_id'];
 $name = $myFetchedUser['lastname'];
 $codestatus = 'act';
 $sendCode = $this->conn->query("INSERT INTO emailverify(user_id, vericode, status)VALUES ('$userId', '$code', '$codestatus')");
+$htmlContent =' 
+    <html> 
+    <body> 
+        <h2 style="text-align:center;">Confirmation Code</h2> 
+        <table cellspacing="0" style="border: 2px  groove  #4154F1; width: 100%;"> 
+            <tr> 
+        <td style="color:#fffff; text-align:center; padding-top: 30px;
+        padding-bottom:30px;"><?= htmlspecialchars($code) ?</td> 
+            </tr> 
+        </table> 
+    </body> 
+    </html>';
 $mail = new PHPMailer(true);
 try {
 //Server settings
@@ -164,7 +193,7 @@ $mail->addAddress($myemail);
 
 $mail->isHTML(true);                                  
 $mail->Subject = 'Confirmation code';
-$mail->Body    = 'Your verification code is'.' '.$code;
+$mail->Body    = $htmlContent ;
 $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
 
 $mail->send();

@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { GetpostService } from '../services/getpost.service';
 import { environment } from '../../../src/environments/environment';
 import { HttpClient } from '@angular/common/http';
-
+import { ToastrService } from 'ngx-toastr';
 @Component({
 selector: 'app-details',
 templateUrl: './details.component.html',
@@ -22,16 +22,13 @@ public Invitenotify = '';
 public processing = false;
 public baseUrl = environment.baseUrl;
 public myInvites = [];
+public acceptedInvites = [];
 
-checkCondition(duration) {
-this.noOfFriends = duration-1;
-this.notice = true;
-this.noOfinvites = true;
-}
+
 
 SendInvite() {
 if (this.email == '') {
-alert('dd')
+this.Invitenotify = 'empty'
 } else {
 let details = { email: this.email, userid: this.userId, ajoid:this.ajoId}
 this.processing = true;
@@ -43,16 +40,33 @@ this.Invitenotify = 'bad';
 } else if (data.Emailnotfound) {
 this.processing = false;
 this.Invitenotify = 'notfound';  
-} else if (data.Invitesent) {
+} else if (data.AlreadyInvited) {
+this.processing = false;
+this.Invitenotify = 'alreadyinvited'
+}else if (data.Invitesent) {
 this.processing = false;
 this.Invitenotify = 'sent';
-}
-})      
-}
-
 
 }
-constructor(public actRoute: ActivatedRoute, public _post: GetpostService, public http: HttpClient, public router: Router) { }
+  
+ }
+ 
+)
+}
+}
+ startThrift() {
+  this.http.post<any>(`${this.baseUrl}startajo.php`, JSON.stringify
+  (this.ajoId)).subscribe(
+  data => {
+  console.log(data)
+  })
+ }
+ 
+
+
+
+
+constructor(public actRoute: ActivatedRoute, public _post: GetpostService, public http: HttpClient, public router: Router, private toastr: ToastrService) { }
 
 ngOnInit(): void {
 //  SEND TO SERVICES 
@@ -61,8 +75,6 @@ let auth = JSON.parse(atob(this.auth.split('.')[1]));
 this.userId = auth.user;
 this._post.getajopost(this.userId)
 this._post.getInvites(this.userId)
-
-
 
 // // RECEIVE FROM SERVICE
 this._post.allpost.subscribe(data => {
@@ -76,9 +88,17 @@ this.ajoId = param.id;
 
 this.http.post<any>(`${this.baseUrl}myinvites.php`, JSON.stringify
 (this.userId)).subscribe(
-    data => {
-    this.myInvites = data.Myinvites
+data => {
+this.myInvites = data.Myinvites
 
 })
+
+this.http.post<any>(`${this.baseUrl}getaccepted.php`, JSON.stringify
+(this.ajoId)).subscribe(
+data => {
+this.acceptedInvites = data.Getaccepted
+}) 
+
 }
+
 }

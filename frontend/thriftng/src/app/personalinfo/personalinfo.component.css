@@ -73,3 +73,13 @@ div{
 
 
 
+select{
+    outline: 0px !important;
+    -webkit-appearance: none;
+    box-shadow: none !important;
+    background: none;
+       
+}
+option{
+    font-family: "Nunito", sans-serif;  
+}

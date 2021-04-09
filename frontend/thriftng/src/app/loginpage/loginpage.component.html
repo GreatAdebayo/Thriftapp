@@ -2,7 +2,7 @@
 <div class="container">
 <a routerLink="/" class="logo navbar-brand">
 <img src="assets/img/logo.png" alt="">
-<span class="navtext ml-1">Thrift.ng</span>
+<span class="navtext ml-1">Thrift</span>
 </a>
 <ul class="navbar-nav float-between ml-auto">
 <li class="nav-item">
@@ -29,7 +29,7 @@
 <p class="font-weight-bold"><i class="fas fa-lock-alt txt"></i> Password</p>
 <input type="password" class="form-control border-top-0 border-left-0 border-right-0 rounded-0 inpu font-italic txt" aria-label="Small" aria-describedby="inputGroup-sizing-sm"  name="password" placeholder="Password" [(ngModel)]="password">   
 </div><br>
-<small type="submit" class="txt font-weight-bold animate__animated animate__fadeIn animate__delay-2s" data-toggle="modal" data-target="#exampleModal">Reset password</small>
+<small class="txt font-weight-bold animate__animated animate__fadeIn animate__delay-2s" data-toggle="modal" data-target="#exampleModal">Reset password</small>
 <br>
 <small *ngIf="response=='good'" class="text-primary font-weight-bold">Login Details Correct</small>
 <small *ngIf="response=='bad'" class="text-danger font-weight-bold">Login Details Incorrect</small>
@@ -58,7 +58,7 @@
 <div class="modal-header shadow">
 <a>
 <img src="assets/img/logo.png" alt="">
-<small class="navtext ml-1 font-weight-bold">Thrift.ng</small>
+<small class="navtext ml-1 font-weight-bold">Thrift</small>
 </a>
 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 <span aria-hidden="true">&times;</span>
@@ -67,7 +67,7 @@
 <div class="modal-body">
 <h6 class="animate__animated animate__fadeIn font-weight-bold">Reset your password</h6>
 <small class="font-weight-bold text-danger" *ngIf='resetInfo == "empty"'>Please Enter your email</small>  
-<small class="font-weight-bold text-danger" *ngIf='resetInfo == "bad"'>Email cannot be found <span type="submit" class="ml-1 text-info font-weight-bold" routerLink="/signup" data-dismiss="modal">Signup Instead</span></small>  
+<small class="font-weight-bold text-danger" *ngIf='resetInfo == "bad"'>Email cannot be found <span class="ml-1 text-info font-weight-bold" routerLink="/signup" data-dismiss="modal">Signup Instead</span></small>  
 <br>
 <div class="animate__animated animate__fadeIn">
 <p class="font-weight-bold"><i class="fas fa-user txt"></i> Email</p>
@@ -87,7 +87,7 @@
 <small class="font-weight-bold text-danger" *ngIf='otpwrong'>Wrong or Expired OTP</small> <br> 
 <small class="font-weight-bold text-danger" *ngIf='otpexpire'>Please fill in all details</small>  
 <div class="text-center animate__animated animate__fadeIn" *ngIf='resetInfo=="good"'>
-<button  type="submit" class="btn border-0 outline-0 btn-sm pt-1"><i class="far fa-arrow-alt-circle-right fa-2x icon text-light" (click)="updatePass()"></i></button>
+<button class="btn border-0 outline-0 btn-sm pt-1"><i class="far fa-arrow-alt-circle-right fa-2x icon text-light" (click)="updatePass()"></i></button>
 </div>
 <br>
 </div>

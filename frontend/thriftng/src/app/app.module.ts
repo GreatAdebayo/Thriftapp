@@ -11,7 +11,6 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { LoaderComponent } from './loader/loader.component';
 import { MythriftsComponent } from './mythrifts/mythrifts.component';
 import { MyaccountComponent } from './myaccount/myaccount.component';
-
 import { PersonalinfoComponent } from './personalinfo/personalinfo.component';
 import { EmailverifyComponent } from './emailverify/emailverify.component';
 import { ProfileComponent } from './profile/profile.component';
@@ -21,6 +20,10 @@ import { FundwalletComponent } from './fundwallet/fundwallet.component';
 import { WithdrawComponent } from './withdraw/withdraw.component';
 import { WrongpageComponent } from './wrongpage/wrongpage.component';
 import { DetailsComponent } from './details/details.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';    
+import { ToastrModule } from 'ngx-toastr';
+import { InvitedetailsComponent } from './invitedetails/invitedetails.component';
+
 
 
 
@@ -45,7 +48,8 @@ import { DetailsComponent } from './details/details.component';
    
     WrongpageComponent,
     DetailsComponent,
-   
+    InvitedetailsComponent,
+  
 
   ],
   imports: [
@@ -54,6 +58,13 @@ import { DetailsComponent } from './details/details.component';
     ReactiveFormsModule,
     FormsModule,
     HttpClientModule,
+    BrowserAnimationsModule,  
+    ToastrModule.forRoot(
+      {
+        positionClass: 'top-left'
+        
+      }
+    )
    
     
     

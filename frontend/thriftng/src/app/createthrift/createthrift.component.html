@@ -5,7 +5,7 @@
 <div class="col mx-auto text-left">
 <div class="w-80 mt-5">
 <div class="alert alert-danger text-center bg-transparent" role="alert" *ngIf="notify=='bad'" >
-<small class="font-weight-bold justify-content-center"> Your email is yet to be verified, you won't be able to create a thrift untill you do <span (click)="Verify()" type="submit"class="text-dark">Click to verify Now</span></small>
+<small class="font-weight-bold justify-content-center"><i class="fas fa-bell-exclamation"></i> Your email is yet to be verified, you won't be able to create a thrift untill you do <span (click)="Verify()" class="text-dark">Click to verify Now</span></small>
 </div>
 <p class="font-weight-bold animate__animated animate__fadeIn"><i class="fas fa-plus fa-1x txt"></i> Create a thrfit and start to invite your friends</p> 
 <div class="animate__animated animate__zoomIn">
@@ -22,7 +22,7 @@
 <div class="animate__animated animate__zoomIn">
     <label class="font-weight-bold txt">Type</label>
     <form [formGroup]="typeForm">
-    <select class="form-control" formControlName="typeControl">
+    <select class="form-control" formControlName="typeControl" (change)="checkType()">
     <option [value]="types" *ngFor="let types of thrifttypes">  {{types}}</option>
     </select>
     </form>
@@ -30,7 +30,7 @@
     </div> <br>
 
 <div class="animate__animated animate__zoomIn">
-<label class="font-weight-bold txt">Amount</label>
+<label class="font-weight-bold txt">Amount per({{type=='Daily'?'day':type=='Weekly' ? 'week': type=='Monthly'? 'month':''}})</label>
 <input type="number" class="form-control border-top-0 border-left-0 border-right-0 rounded-0 inpu font-italic txt" aria-label="Small" aria-describedby="inputGroup-sizing-sm"   placeholder="Individual contribution per the type chosen" [(ngModel)]="amount">   
 </div> <br>
 
@@ -39,7 +39,7 @@
 <label class="font-weight-bold txt">Duration<small class="font-weight-bold">:How Long?</small></label> 
 <input type="number" class="form-control border-top-0 border-left-0 border-right-0 rounded-0 inpu font-italic txt" aria-label="Small" aria-describedby="inputGroup-sizing-sm"  placeholder="This determines the number of friends you can invite" [(ngModel)]="duration"> 
 </div> <br>
-<p class="font-weight-bold txt" *ngIf="duration>0"><i class="fas fa-info-circle"></i> You can only Invite <span class="text-danger">{{duration-1}}</span> friends</p>
+<p class="font-weight-bold txt" *ngIf="duration>0"><i class="fas fa-info-circle"></i> Just <span class="text-danger">{{duration-1}}</span> friends can join your thrift</p>
 
 <small class="font-weight-bold text-danger" *ngIf="note=='bad'">Please Fill all Inputs</small>
 <small class="font-weight-bold text-info" *ngIf="note=='good'">Successfully Posted</small>

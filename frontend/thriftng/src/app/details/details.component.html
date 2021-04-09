@@ -1,12 +1,174 @@
-<div class="container mt-5">
+<section>
+<ng-container *ngFor="let post of ajopost">
+<div class="container" *ngIf="ajoId==post.ajo_id">
+<div class="row mt-4 justify-content-center mx-1">
+<div class="col-lg-5 shadow rounded mx-auto mt-4 py-1 animate__animated animate__fadeIn justify-content-center">
+<h5 class="font-weight-bold pt-1">{{post.title}}</h5> 
+<small class="font-weight-bold txt"><i class="fas fa-wallet"></i> Thrift Wallet</small>
+<p class="font-weight-bold txt">₦{{post.ajowallet}}.00</p>
+<button class="btn text-white font-weight-bold shadow btn-sm animate__animated animate__fadeIn mb-2" data-toggle="modal" data-target="#exampleModal" [class]="acceptedInvites.length+1==post.duration?'invisible':''">
+<span>Invite</span>
+<i class="bi bi-arrow-right"></i>
+</button>
+</div>
+<div class="col-lg-5  shadow rounded mx-auto mt-4 pt-4 pb-3 animate__animated animate__fadeIn justify-content-center  bg-purple text-light">
+<p class="font-weight-bold"><i class="fas fa-list-alt"></i> {{post.type}}</p>
+<p class="font-weight-bold"><i class="fas fa-money-bill-wave-alt"></i> Amount: <span style="font-size:large;">₦{{post.amount}}</span> per {{post.type=='Daily'?'day':post.type=='Weekly' ? 'week': post.type=='Monthly'? 'month':''}}</p> 
+<p class="font-weight-bold"><i class="fas fa-clock"></i> Duration: {{post.duration}}{{post.type=='Daily'?'days':post.type=='Weekly' ? 'weeks': post.type=='Monthly'? 'months':''}}</p>
+<p class="font-weight-bold"><i class="fas fa-sort-numeric-up-alt"></i> No of Invites sent: {{post.no_invites}}</p> 
+</div>
+</div>
+
+
+
+<div class="row my-5 mx-1 animate__animated animate__fadeIn">
+<div class="col">
+<small class="font-weight-bold text-info"><i class="fas fa-exclamation-circle"></i> You can start Thrift when the number of Participants is {{post.duration}}</small> <br>
+<div id="accordion" class="mt-2">
+<div class="card">
+<div class="card-header bg-transparent border-0" id="headingOne">
+<h5 class="mb-0">
+<small class="font-weight-bold justify-content-center txt" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+<i class="fas fa-infinity"></i> Invites Sent
+</small>
+</h5>
+</div>
+
+<div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+<div class="card-body">
+<p *ngFor="let post of myInvites">
+<small class="font-weight-bold text-primary"  *ngIf="ajoId==post.ajo_id"><i class="fas fa-thumbs-up"></i> You've invited {{post.invitee_name}} to your thrift <span><p class="float-right font-weight-bold" [class]="post.status=='Accepted'? 'text-primary':post.status=='Rejected'?'text-danger':post.status=='Pending'?'text-info':''"><span class="txt">Status:</span> {{post.status}}</p></span></small>
+</p>
+</div>
+</div>
+</div> <br>
+<div class="card">
+<div class="card-header bg-transparent border-0" id="headingTwo">
+<h5 class="mb-0">
+<small class="font-weight-bold justify-content-center txt" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+<i class="fas fa-users"></i> Thrift Participants ({{acceptedInvites.length+1}})
+</small>
+</h5>
+</div>
+<div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+<div class="card-body">
+<p class="font-weight-bold text-primary"><i class="fas fa-user"></i> You</p>
+<p *ngFor="let post of acceptedInvites">
+<small class="font-weight-bold text-primary"><i class="fas fa-user"></i> {{post.invitee_name}}</small>
+</p>
+<div class="mt-2 text-center">
+ <button class="btn text-white font-weight-bold shadow btn-sm animate__animated animate__fadeIn mb-2" [class]="acceptedInvites.length+1!=post.duration?'invisible':''" (click)="startThrift()">
+ <span>Start</span>
+ <i class="bi bi-arrow-right"></i>
+ </button>
+ </div>
+</div>
+</div>
+</div> <br>
+<div class="card">
+<div class="card-header bg-transparent border-0" id="headingThree">
+<h5 class="mb-0">
+<small class="font-weight-bold justify-content-center txt" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+<i class="fas fa-money-bill-wave-alt"></i> Payment Schedule
+</small>
+</h5>
+</div>
+<div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+<div class="card-body">
+ddd
+</div>
+</div>
+</div><br>
+<div class="card">
+<div class="card-header bg-transparent border-0" id="headingThree">
+<h5 class="mb-0">
+<small class="font-weight-bold justify-content-center txt" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseThree">
+<i class="fas fa-cog"></i> Settings
+</small>
+</h5>
+</div>
+<div id="collapseFour" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+<div class="card-body">
+ddd
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</ng-container>
+</section>
+
+<div class="modal" tabindex="-1" role="dialog" id="exampleModal">
+<div class="modal-dialog" role="document">
+<div class="modal-content border-0">
+<div class="modal-header shadow">
+<a>
+<img src="assets/img/logo.png" alt="">
+<small class="navtext ml-1 font-weight-bold">Thrift</small>
+</a>
+<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+<span aria-hidden="true">&times;</span>
+</button>
+</div>
+<div class="modal-body">
+<h6 class="animate__animated animate__fadeIn font-weight-bold">Start Inviting your friends</h6> 
+<br>
+
+<div class="animate__animated animate__fadeIn">
+<div class="alert alert-primary text-center justify-content-center bg-transparent" role="alert"  *ngIf="notice">
+<small class="font-weight-bold"><i class="fas fa-exclamation-circle"></i> Only invite your known and trust worthy friends</small>  
+</div>
+
+<div class="alert alert-primary" role="alert" *ngIf="Invitenotify=='sent'">
+<small class="font-weight-bold"><i class="fas fa-check"></i> Invite sent, You'll be notified via email when they accept your invite.</small>  
+</div>
+
+<div class="animate__animated animate__fadeIn">
+<p class="font-weight-bold"><i class="fas fa-user txt"></i> Email</p>
+<input type="email" class="form-control border-top-0 border-left-0 border-right-0 rounded-0 inpu font-italic txt" aria-label="Small" aria-describedby="inputGroup-sizing-sm"  name="email" placeholder="Invite your friends to your thrift there with there email" [(ngModel)]="email">  
+</div>
+<br>
+<small class="font-weight-bold text-danger" *ngIf="Invitenotify=='bad'">You cannot invite yourself</small>
+<small class="font-weight-bold text-danger" *ngIf="Invitenotify=='notfound'">User not found</small>
+<small class="font-weight-bold text-danger" *ngIf="Invitenotify=='empty'">Enter a valid email</small>
+<small class="font-weight-bold text-danger" *ngIf="Invitenotify=='alreadyinvited'">You've already Invited this person</small>
+<div *ngIf="processing" class="text-center">
+<app-loader></app-loader>
+</div> <br>
+
+<div class="text-center animate__animated animate__fadeIn">
+<button class="btn border-0 outline-0 btn-sm pt-1"><i class="far fa-arrow-alt-circle-right fa-2x icon text-light" (click)="SendInvite()"></i></button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+
+
+<!-- INVITE  SECTION -->
+
+
+
+
+
+
+
+
+
+<!-- <div class="container mt-5">
 <div class="row mt-5">
 <div class="col-md-7 animate__animated animate__fadeIn justify-content-center">
 <ng-container *ngFor="let post of ajopost"> 
 <section *ngIf="ajoId==post.ajo_id">
 <p class="font-weight-bold animate__animated animate__fadeIn">Start Inviting your friends</p>
-<div class="alert alert-danger text-center bg-transparent" role="alert">
-    <small class="font-weight-bold justify-content-center">We couldn't debit your friend, Great's wallet. Please tell him/her to fund his wallet</small>
-    </div>
+<div class="alert alert-danger text-center bg-transparent" role="alert" *ngIf="good">
+<small class="font-weight-bold justify-content-center">We couldn't debit your friend, Great's wallet. Please tell him/her to fund his wallet</small>
+</div>
 <h5 class="font-weight-bold txt">₦{{post.ajowallet}}.00</h5>
 <h6 class="font-weight-bold text-info">Title: {{post.title}}</h6>
 <small class="font-weight-bold  badge badge-pill badge-primary text-white">Type: {{post.type}} ({{post.duration}})</small> <br> <small class="font-weight-bold text-primary">Amount to be saved: <span style="font-size:large;">₦{{post.amount}}.00</span></small>
@@ -42,20 +204,20 @@
 <div class="col-md-5 mt-5">
 <small class="font-weight-bold">Sent Invites</small>
 <div class="alert alert-primary justify-content-center bg-transparent" role="alert">
-    <p  *ngFor="let post of myInvites">
-        <small class="font-weight-bold"  *ngIf="ajoId==post.ajo_id && myInvites.length>0"><i class="fas fa-thumbs-up"></i> You've invited {{post.invitee_name}} to your thrift <span><small class="text-danger float-right font-weight-bold">Pending</small></span></small>
-    </p>
+<p  *ngFor="let post of myInvites">
+<small class="font-weight-bold"  *ngIf="ajoId==post.ajo_id && myInvites.length>0"><i class="fas fa-thumbs-up"></i> You've invited {{post.invitee_name}} to your thrift <span><small class="text-danger float-right font-weight-bold">Pending</small></span></small>
+</p>
 
 </div>
 <div class="text-center animate__animated animate__fadeIn">
-    <button class="btn text-white font-weight-bold shadow btn-sm" (click)="SendInvite()">
-    <span>Start</span>
-    <i class="bi bi-arrow-right"></i>
-    </button>
-    </div>
+<button class="btn text-white font-weight-bold shadow btn-sm" (click)="SendInvite()">
+<span>Start</span>
+<i class="bi bi-arrow-right"></i>
+</button>
+</div>
 
 </div>  
 
 
 </div>
-<div>
+<div> -->

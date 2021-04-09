@@ -22,7 +22,7 @@
 
 <div class="animate__animated animate__zoomIn ">
 <label class="font-weight-bold txt">DOB</label>
-<input type="text" class="form-control border-top-0 border-left-0 border-right-0 rounded-0 inpu font-italic txt" aria-label="Small" aria-describedby="inputGroup-sizing-sm"  name="dob" placeholder="Date of Birth" formControlName="dob">   
+<input type="date" class="form-control border-top-0 border-left-0 border-right-0 rounded-0 inpu font-italic txt" aria-label="Small" aria-describedby="inputGroup-sizing-sm"  name="dob" placeholder="Date of Birth" formControlName="dob">   
 </div> <br>
 
 <div class="animate__animated animate__zoomIn">
@@ -35,9 +35,14 @@
 <input type="tel" class="form-control border-top-0 border-left-0 border-right-0 rounded-0 inpu font-italic txt" aria-label="Small" aria-describedby="inputGroup-sizing-sm"  name="number" placeholder="Phone Number" formControlName="phone">   
 </div> <br>
 
-<div class="animate__animated animate__fadeIn">
+<div class="animate__animated animate__zoomIn">
 <label class="font-weight-bold txt">Gender</label>
-<input type="text" class="form-control border-top-0 border-left-0 border-right-0 rounded-0 inpu font-italic txt" aria-label="Small" aria-describedby="inputGroup-sizing-sm"  name="gender" placeholder="Gender" formControlName="gender">  
+<form [formGroup]="GenderForm">
+<select class="form-control" formControlName="typeControl">
+<option [value]="types" *ngFor="let types of thrifttypes">  {{types}}</option>
+</select>
+</form>
+
 </div> <br>
 
 <div class="animate__animated animate__fadeIn">
@@ -52,7 +57,7 @@
 
 <small class="font-weight-bold text-danger" *ngIf="notvalid">Please fill in all informations</small>
 <small class="font-weight-bold text-danger" *ngIf="showexists">{{exists}}<span type="button"class="text-primary ml-2" routerLink="/login">Login Instead</span></small>
-<small class="font-weight-bold text-success" *ngIf="showsuccess" (click)="sendCode()">{{success}}</small> <br>
+<p class="font-weight-bold text-success" *ngIf="showsuccess" (click)="sendCode()">{{success}}</p> <br>
 <small class="font-weight-bold text-danger" *ngIf="verifyCodeSent=='error'">Error sending verification code</small>
 <small class="font-weight-bold text-danger" *ngIf="verifyCodeSent=='Email not found'">Email not found</small>
 <div *ngIf="processing" class="text-center">

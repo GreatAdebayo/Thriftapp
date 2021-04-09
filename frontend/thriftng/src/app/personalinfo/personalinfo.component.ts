@@ -19,8 +19,8 @@ public showsuccess = false;
 public dbemail = '';
 public verifyCodeSent = '';
 public baseUrl = environment.baseUrl;
-
-
+public thrifttypes = ['Choose Gender', 'Male', 'Female'];
+public GenderForm: FormGroup;
     
 
 
@@ -32,7 +32,6 @@ middleName: ['', [Validators.required]],
 dob: ['', [Validators.required]],
 address: ['', [Validators.required]],
 phone: ['', [Validators.required, Validators.minLength(11)]],
-gender: ['', [Validators.required]],
 email: ['', [Validators.required]],
 password: ['', [Validators.required]]
 })
@@ -40,12 +39,14 @@ password: ['', [Validators.required]]
 
 
 firstForm() {
-
 if (this.userForm.valid) {
 this.notvalid = false;
 this.processing = true;
-this.showexists = false;
-let userDetails = this.userForm.value;
+    this.showexists = false;
+    let genderdetails = this.GenderForm.value;
+let gender = genderdetails.typeControl;
+    let userDetails = this.userForm.value;
+    userDetails.gender = gender;
 let email = userDetails.email
 this.http.post<any>(`${this.baseUrl}signup.php`, JSON.stringify(userDetails)).subscribe(
 data => {
@@ -90,7 +91,10 @@ this.router.navigate(['/signup/emailverify']);
 
 
 
-ngOnInit(): void {
+    ngOnInit(): void {
+        this.GenderForm= this.fb.group({
+            typeControl: ['Choose Gender']
+        })
 }
 
 }

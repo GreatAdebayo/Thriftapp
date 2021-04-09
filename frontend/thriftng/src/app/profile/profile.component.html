@@ -7,7 +7,7 @@
 <label class="btn ml-2 mt-1 btn-sm text-white font-weight-bold">
 Choose <input type="file" hidden (change)="onFileChanged($event)">
 </label>
-<small class="font-weight-bold ml-1" type="submit" (click)="uploadFile()">Upload</small> <br> 
+<small class="font-weight-bold ml-1" (click)="uploadFile()">Upload</small> <br> 
 <small class="font-weight-bold text-info" *ngIf="!status"> {{uploadInfo}}</small>  
 <small class="font-weight-bold text-info" *ngIf="status=='good'"> Picture successfully uploaded </small>
 <small class="font-weight-bold text-danger" *ngIf="status=='bad'"> Picture not uploaded </small>

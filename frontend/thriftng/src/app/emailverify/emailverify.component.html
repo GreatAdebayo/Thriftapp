@@ -9,7 +9,7 @@
 <label class="font-weight-bold">Enter your verification code</label>
 <input type="number" class="form-control border-top-0 border-left-0 border-right-0 rounded-0 inpu font-italic" aria-label="Small" aria-describedby="inputGroup-sizing-sm"  name="code" placeholder="verification code" [(ngModel)]="code">   
 </div> <br>
-<small type="submit" class="txt font-weight-bold" (click)="resendCode()">Resend Code</small> <br>
+<small class="txt font-weight-bold" (click)="resendCode()">Resend Code</small> <br>
 <small *ngIf="response=='correct'" class="text-primary font-weight-bold">Verification code correct</small>
 <small *ngIf="response=='incorrect'" class="text-danger font-weight-bold">Verification code incorrect</small>
 <small *ngIf="response=='verified'" class="text-danger font-weight-bold">Account already verified: <span type="button"class="text-primary ml-1" routerLink="/login">Login Instead</span></small>

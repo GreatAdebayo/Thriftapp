@@ -8,6 +8,7 @@ import { EmailGuard } from './email.guard';
 import { EmailverifyComponent } from './emailverify/emailverify.component';
 import { FundwalletComponent } from './fundwallet/fundwallet.component';
 import { HomepageComponent } from './homepage/homepage.component';
+import { InvitedetailsComponent } from './invitedetails/invitedetails.component';
 import { InvitesComponent } from './invites/invites.component';
 import { LoginpageComponent } from './loginpage/loginpage.component';
 import { MyaccountComponent } from './myaccount/myaccount.component';
@@ -34,6 +35,7 @@ const routes: Routes = [
   {path: 'invites', component: InvitesComponent },
   {path: 'fund', component: FundwalletComponent },
   {path: 'withdraw', component: WithdrawComponent },
+  {path: 'invitesdetails', component: InvitedetailsComponent },
   ]
   },
   {path:'**', component:WrongpageComponent},
