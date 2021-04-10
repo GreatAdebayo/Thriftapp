@@ -2,52 +2,120 @@
 <div class="row mt-5">
 <div class="col">
 <section>
+<div id="accordion">
+<div class="card">
+<div class="card-header bg-transparent border-0" id="headingOne">
+<h5 class="mb-0">
+<small class="font-weight-bold justify-content-center text-danger" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+        <i class="fas fa-infinity"></i> All Invites from friends
+        </small>
+</h5>
+</div>
+
+<div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+<div class="card-body">
 <div class="alert alert-danger  justify-content-center bg-transparent text-center" role="alert" *ngIf="notify=='bad'">
 <small class="font-weight-bold  animate__animated animate__fadeIn"><i class="fas fa-bell-exclamation"></i>  Your email is yet to be verified, you won't be able to see the details of the invites untill you do <span  (click)="Verify()" class="text-dark">Click to verify Now</span></small>
 </div>
-<p class="font-weight-bold text-danger animate__animated animate__fadeIn">Pending Invites from your friends</p>
 <div *ngFor="let post of myInvites"> 
 <ul class="list-group animate__animated animate__fadeIn" *ngIf="userId==post.invitee_id">
 <li class="list-group-item"><small class="font-weight-bold">Your friend <span class="text-primary">{{post.inviter_name}}</span> Invites you to join there Thrift <span class="ml-5 text-secondary">{{post.time}}</span> <span class="ml-2" [class]="post.status=='Accepted'? 'text-primary':post.status=='Rejected'?'text-danger':post.status=='Pending'?'text-info':''">{{post.status}}</span> </small> <a class="float-right text-primary font-weight-bold" data-toggle="modal" data-target="#exampleModal" (click)="details(post.ajo_id)" [disabled]="notify=='bad'"> <i class="fas fa-info-circle text-primary mr-1"></i><small>Details</small></a>
 </li><br>
 </ul>
+
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-        <div class="modal-content">
-        <div class="modal-header justify-content-center">
-        <h6 class="modal-title font-weight-bold " id="exampleModalLabel"><i class="fas fa-info-circle"></i> Thrift Details</h6>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-        </button>
-        </div>
-        <div class="modal-body justify-content-center">
-        <p class="font-weight-bold"><span class="txt">Title:</span> {{title.toUpperCase()}}</p>
-        <p class="font-weight-bold"><span class="txt">Describtion:</span> {{describ}}</p>
-        <p class="font-weight-bold"><span class="txt">Type:</span> {{type}}</p>
-        <p class="font-weight-bold"><span class="txt">Duration:</span> {{duration}}{{type=='Daily'?'days':type=='Weekly' ? 'weeks': type=='Monthly'? 'months':''}}</p>
-        <p class="font-weight-bold"><span class="txt">Amount:</span>  ₦{{amount}}</p>
-        <small class="font-weight-bold text-danger" *ngIf="requestnotify=='insufficient'"><i class="fas fa-info-circle"></i> You don't have enough funds to join this thrift, please fund your wallet</small> 
-        <small class="font-weight-bold text-primary" *ngIf="requestnotify=='accepted'"> Request Accepted, Kindly Check your accepted requests below</small>
-        <small class="font-weight-bold text-danger" *ngIf="requestnotify=='already'"> Request Already Accepted, Kindly Check your accepted requests below</small> 
-        <small class="font-weight-bold text-danger" *ngIf="requestnotify=='alreadyrejected'"> Request Already Rejected</small> 
-        <small class="font-weight-bold text-danger" *ngIf="requestnotify=='rejected'"> Request Rejected</small><br>
-                <div *ngIf="processing" class="text-center">
-                        <app-loader></app-loader>
-                        </div> <br>
-        
-        <div class="modal-footer">      
-        <button type="button" class="bg-primary border-0 btn-sm text-light font-weight-bold"  (click)="accept(post.invitee_id)" > <i class="fas fa-comment-alt-check"></i> Accept</button>
-        <button type="button" class="bg-danger btn-sm border-0 text-light font-weight-bold" (click)="reject(post.invitee_id)"><i class="fas fa-vote-nay"></i> Reject</button>
-        </div>
-        </div>
-        </div>
+<div class="modal-dialog" role="document">
+<div class="modal-content">
+<div class="modal-header justify-content-center">
+<h6 class="modal-title font-weight-bold " id="exampleModalLabel"><i class="fas fa-info-circle"></i> Thrift Details</h6>
+<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+<span aria-hidden="true">&times;</span>
+</button>
+</div>
+<div class="modal-body justify-content-center">
+<p class="font-weight-bold"><span class="txt">Title:</span> {{title.toUpperCase()}}</p>
+<p class="font-weight-bold"><span class="txt">Description:</span> {{describ}}</p>
+<p class="font-weight-bold"><span class="txt">Type:</span> {{type}}</p>
+<p class="font-weight-bold"><span class="txt">Duration:</span> {{duration}}{{type=='Daily'?'days':type=='Weekly' ? 'weeks': type=='Monthly'? 'months':''}}</p>
+<p class="font-weight-bold"><span class="txt">Amount:</span>  ₦{{amount}}</p>
+<div class="alert alert-danger text-center justify-content-center text-center bg-transparent" role="alert">
+<small class="font-weight-bold  animate__animated animate__fadeIn"><i class="fas fa-bell-exclamation"></i> IMPORTANT INFORMATION: Kindly read the following instructions: <br> 1. Fund your wallet latest a day to the next billing cycle <br><br> 2. If we are unable to debit your account due to insufficient funds, you'll get a fine of 2% on the payment you missed <br>
+<br>3. If we are uanble to debit your wallet 2 consecutive times, we'll have to make a forcefull withdrawal from your bank account and be banned from our platform, THANKS</small><br>
+</div>
+<small class="font-weight-bold text-danger" *ngIf="requestnotify=='insufficient'"><i class="fas fa-info-circle"></i> You don't have enough funds to join this thrift, please fund your wallet</small> 
+<small class="font-weight-bold text-primary" *ngIf="requestnotify=='accepted'"> Request Accepted, Kindly Check your accepted requests below</small>
+<small class="font-weight-bold text-danger" *ngIf="requestnotify=='already'"> Request Already Accepted, Kindly Check your accepted requests below</small> 
+<small class="font-weight-bold text-danger" *ngIf="requestnotify=='alreadyrejected'"> Request Already Rejected</small>
+<small class="font-weight-bold text-danger" *ngIf="requestnotify=='filledup'"> Thrift Participants filled up</small> 
+<small class="font-weight-bold text-danger" *ngIf="requestnotify=='rejected'"> Request Rejected</small><br>
+<div *ngIf="processing" class="text-center">
+<app-loader></app-loader>
+</div> <br>
+
+<div class="modal-footer">      
+<button type="button" class="bg-primary border-0 btn-sm text-light font-weight-bold"  (click)="accept(post.invitee_id)" > <i class="fas fa-comment-alt-check"></i> Accept</button>
+<button type="button" class="bg-danger btn-sm border-0 text-light font-weight-bold" (click)="reject(post.invitee_id)"><i class="fas fa-vote-nay"></i> Reject</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>     
+</div>
+</div>
 </div>
 </div>
 
+<br>
 
-
+<div id="accordion">
+<div class="card">
+<div class="card-header bg-transparent border-0" id="headingThree">
+<h5 class="mb-0">
+<small class="font-weight-bold justify-content-center txt" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
+        <i class="fas fa-infinity"></i> Ongoing/Accepted Invites
+        </small>
+</h5>
 </div>
+
+<div id="collapseThree" class="collapse show" aria-labelledby="headingThree" data-parent="#accordion">
+<div class="card-body">
+<div class="alert alert-danger  justify-content-center bg-transparent text-center" role="alert" *ngIf="notify=='bad'">
+<small class="font-weight-bold  animate__animated animate__fadeIn"><i class="fas fa-bell-exclamation"></i>  Your email is yet to be verified, you won't be able to see the details of the invites untill you do <span  (click)="Verify()" class="text-dark">Click to verify Now</span></small>
+</div>
+<div *ngFor="let post of myInvites"> 
+<ul class="list-group animate__animated animate__fadeIn" *ngIf="userId==post.invitee_id&&post.status=='Accepted'">
+<li class="list-group-item"><small class="font-weight-bold text-primary">{{post.inviter_name}}'s Thrift <span class="ml-2" [class]="post.payment=='paid'?'text-info':post.payment=='notpaid'?'text-danger':''">{{post.payment.toUpperCase()}}</span> </small> <a class="float-right text-primary font-weight-bold" data-toggle="modal" data-target="#exampleModal1" (click)="details(post.ajo_id)" [disabled]="notify=='bad'"> <i class="fas fa-info-circle text-primary mr-1"></i><small>Details</small></a>
+</li><br>
+</ul>
+
+<div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal-dialog" role="document">
+<div class="modal-content">
+<div class="modal-header justify-content-center">
+<h6 class="modal-title font-weight-bold " id="exampleModalLabel"><i class="fas fa-info-circle"></i> Ongoing/Accepted Invites Details</h6>
+<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+<span aria-hidden="true">&times;</span>
+</button>
+</div>
+<div class="modal-body justify-content-center">
+<p class="font-weight-bold txt text-uppercase">Title:<span class="text-lowercase"> {{title.toUpperCase()}}</span></p>
+<p class="font-weight-bold txt text-uppercase">Description:<span class="text-lowercase"> {{describ}}</span> </p>
+<p class="font-weight-bold txt text-uppercase">Type:<span class="text-lowercase"> {{type}}</span> </p>
+<p class="font-weight-bold txt text-uppercase">Duration:<span class="text-lowercase"> {{duration}}{{type=='Daily'?'days':type=='Weekly' ? 'weeks': type=='Monthly'? 'months':''}}</span> </p>
+<p class="font-weight-bold txt text-uppercase">Amount:<span class="text-lowercase"> ₦{{amount}}</span>  </p>
+</div>
+</div>
+</div>
+</div>
+</div>     
+</div>
+</div>
+</div>
+</div>
+
 </section>
+
 </div>
 </div>
 </div>

@@ -48,21 +48,91 @@ this.processing = false;
 this.Invitenotify = 'sent';
 
 }
-  
- }
- 
+
+}
+
 )
 }
 }
- startThrift() {
-  this.http.post<any>(`${this.baseUrl}startajo.php`, JSON.stringify
-  (this.ajoId)).subscribe(
-  data => {
-  console.log(data)
-  })
- }
- 
+startThrift() {
+this.http.post<any>(`${this.baseUrl}startajo.php`, JSON.stringify
+(this.ajoId)).subscribe(
+data => {
+this.processing = true;
+if(data.Started) {
+setTimeout(() => this.processing = false, 1000)
+setTimeout(() => this.Invitenotify = 'started', 1000)
+setTimeout(() =>  this.router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
+this.router.navigate([`/dashboard/details/${this.ajoId}`]);
+}), 1200)
 
+
+} else if(data.Startedalready) {
+this.Invitenotify = '';
+setTimeout(() => this.processing = false, 1000)
+setTimeout(()=> this.Invitenotify = 'alreadystarted' , 1000)
+} else if (data.Insufficient) {
+this.Invitenotify = '';
+setTimeout(() => this.processing = false, 1000)
+setTimeout(()=> this.Invitenotify = 'insuff' , 1000)  
+} else if (data.InsufficientInvitee) {
+this.Invitenotify = '';
+setTimeout(() => this.processing = false, 1000)
+setTimeout(()=> this.Invitenotify = 'insuffinvite' , 1000)  
+}
+})
+}
+
+pay(userId) {
+this.Invitenotify = '';
+let details = {userid: userId, ajoid: this.ajoId }
+this.http.post<any>(`${this.baseUrl}pay.php`, JSON.stringify(details)).subscribe(
+data => {
+this.processing = true;
+if (data.Walletempty) {
+setTimeout(() => this.processing = false, 1000)
+setTimeout(() => this.Invitenotify = 'empty', 1000)
+
+} else if (data.AlreadyPaid) {
+setTimeout(() => this.processing = false, 1000)
+setTimeout(() => this.Invitenotify = 'alreadypaid' , 1000)
+
+} else if (data.Paid) {
+setTimeout(() => this.processing = false, 1000)
+setTimeout(() => this.Invitenotify = 'paid', 1000)
+setTimeout(() =>  this.router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
+this.router.navigate([`/dashboard/details/${this.ajoId}`]);
+}), 1200)
+
+
+}
+})
+}
+
+payUser(userId) {
+let details = {userid: userId, ajoid: this.ajoId }
+this.http.post<any>(`${this.baseUrl}payuser.php`, JSON.stringify(details)).subscribe(
+data => {
+this.processing = true;
+if (data.Walletempty) {
+setTimeout(() => this.processing = false, 1000)
+setTimeout(() => this.Invitenotify = 'empty', 1000)
+
+} else if (data.AlreadyPaid) {
+setTimeout(() => this.processing = false, 1000)
+setTimeout(() => this.Invitenotify = 'alreadypaid' , 1000)
+
+} else if (data.Paid) {
+setTimeout(() => this.processing = false, 1000)
+setTimeout(() => this.Invitenotify = 'paid', 1000)
+setTimeout(() =>  this.router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
+this.router.navigate([`/dashboard/details/${this.ajoId}`]);
+}), 1100)
+
+
+} 
+})
+}
 
 
 

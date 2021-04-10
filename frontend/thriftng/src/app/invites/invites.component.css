@@ -90,8 +90,8 @@
     color: #4154F1; 
     }
     section{
-    min-height: 900px;
-    }
+        min-height: 900px;
+        }
     div{
         font-family: "Nunito", sans-serif;  
     }

@@ -9,7 +9,7 @@ use \Firebase\JWT\JWT;
 
 
 class MyLogic2{
-public $notify = array('Verified'=>'', 'Notverified'=>'', 'Email'=>'', 'Fundadded'=>'', 'Balance'=>'', 'Postgood'=>'', 'Ajopost'=>'', 'Notinvite'=>'', 'Invitesent'=>'', 'Emailnotfound'=>'', 'Allinvites'=>'', 'Myinvites'=>'', 'AlreadyInvited'=>'', 'Ajodetails'=>'', 'Accepted'=>'', 'AlreadyAccepted'=>'', 'AlreadyRejected'=>'', 'Rejected'=>'', 'Getaccepted'=>'');
+public $notify = array('Verified'=>'', 'Notverified'=>'', 'Email'=>'', 'Fundadded'=>'', 'Balance'=>'', 'Postgood'=>'', 'Ajopost'=>'', 'Notinvite'=>'', 'Invitesent'=>'', 'Emailnotfound'=>'', 'Allinvites'=>'', 'Myinvites'=>'', 'AlreadyInvited'=>'', 'Ajodetails'=>'', 'Accepted'=>'', 'AlreadyAccepted'=>'', 'AlreadyRejected'=>'', 'Rejected'=>'', 'Getaccepted'=>'', 'Filledup'=>'','Started'=>'', 'Startedalready'=>'', 'Insufficient'=>'', 'InsufficientInvitee'=>'','Walletempty'=>'','Paid'=>'', 'AlreadyPaid'=>'');
 
 public function __construct(){
 $servername = $_ENV['SERVERNAME'];
@@ -224,7 +224,15 @@ echo json_encode($notify);
 }
 
 
-public function acceptreq($inviteeid, $ajoId){
+public function acceptreq($inviteeid, $ajoId, $duration){
+$checkDuration = $this->conn->query("SELECT * FROM ajo_tb WHERE ajo_id = '$ajoId'");
+if($checkDuration->num_rows > 0){
+$myFetcheddata = $checkDuration->fetch_assoc();
+$duration =  $myFetcheddata['duration'];
+$noofPart =  $myFetcheddata['no_part'];
+if($noofPart == $duration){
+$notify['Filledup'] = 'filledup';
+}else{
 $checkStatus = $this->conn->query("SELECT * FROM invite_tb WHERE ajo_id = '$ajoId' and invitee_id = '$inviteeid'");
 if($checkStatus ->num_rows > 0){
 $myFetcheddata = $checkStatus->fetch_assoc();
@@ -233,7 +241,13 @@ if($status == 'Pending'){
 $checkId = $this->conn->query("UPDATE invite_tb SET status = 'Accepted' WHERE ajo_id = '$ajoId' and invitee_id = '$inviteeid'");
 if($checkId){
 $notify['Accepted'] = 'accepted';
-
+$codeSql = $this->conn->query("SELECT * FROM ajo_tb WHERE ajo_id = '$ajoId'");
+if($codeSql->num_rows > 0){
+$myFetcheddata = $codeSql->fetch_assoc();
+$noofpart =  $myFetcheddata['no_part'];
+$newnumber = $noofpart + 1;
+$noofParts = $this->conn->query("UPDATE ajo_tb SET no_part = '$newnumber' WHERE ajo_id = $ajoId");
+}
 }
 }
 elseif($status == 'Accepted'){
@@ -242,8 +256,12 @@ $notify['AlreadyAccepted'] = 'already';
 $notify['AlreadyRejected'] = 'rejected';
 }
 
-echo json_encode($notify);
+
 }  
+}
+echo json_encode($notify);
+}
+
 
 }
 
@@ -275,9 +293,9 @@ public function getaccepted($ajoId){
 $x=[];
 $check = $this->conn->query("SELECT * FROM invite_tb WHERE ajo_id = '$ajoId' and status = 'Accepted'");
 if($check ->num_rows > 0){
- while($row = $check->fetch_array()){
- $x[] = $row;
-  $notify['Getaccepted'] = $x; 
+while($row = $check->fetch_array()){
+$x[] = $row;
+$notify['Getaccepted'] = $x; 
 }
 echo json_encode($notify);
 }}
@@ -291,84 +309,104 @@ $status =  $myFetcheddata['status'];
 $userid =  $myFetcheddata['user_id']; 
 $amount =  $myFetcheddata['amount'];
 if($status == "Pending"){
-  $debitInviter = $this->conn->query("SELECT * FROM users_tb WHERE user_id = '$userid'"); 
+$debitInviter = $this->conn->query("SELECT * FROM users_tb WHERE user_id = '$userid'"); 
 if($debitInviter->num_rows > 0){
 $myFetchedInviter = $debitInviter->fetch_assoc();
-$balance = $myFetchedInviter['wallet'];
-$deduct = $balance - $amount; 
-$updateWallet = $this->conn->query("UPDATE users_tb SET wallet = '$deduct' WHERE user_id = '$userid'");
-if($updateWallet){
-  $check = $this->conn->query("SELECT * FROM invite_tb JOIN users_tb ON invite_tb.invitee_id = users_tb.user_id WHERE ajo_id = '$ajoId' and status = 'Accepted'");
-  if($check ->num_rows > 0){
-  $counter = 0;
-  while($row = $check->fetch_array()){
-  $balance = $row['wallet'];
-  $userId = $row['invitee_id'];
-  $deduct = $balance - $amount;
-  $counter++;
-  $checkWallet = $this->conn->query("UPDATE users_tb SET wallet = '$deduct' WHERE user_id = '$userId'");
-}
-if($checkWallet){
-$noOfParticipant = $counter+1;
-$ajobalance = $amount * $noOfParticipant; 
-$this->conn->query("UPDATE ajo_tb SET status = 'Ongoing', ajowallet = '$ajobalance' WHERE ajo_id = '$ajoId'");
-  }
-}
-  }
-}
+$balanceuser = $myFetchedInviter['wallet'];
+if($amount > $balanceuser){
+$notify['Insufficient'] = 'insufficient';
 }else{
-echo "started already";
+$check = $this->conn->query("SELECT * FROM invite_tb JOIN users_tb ON invite_tb.invitee_id = users_tb.user_id WHERE ajo_id = '$ajoId' and status = 'Accepted'");
+if($check ->num_rows > 0){
+$counter = 0;
+while($row = $check->fetch_array()){
+$balance = $row['wallet'];
+$inviteeid = $row['invitee_id'];
+$lastname = $row['lastname'];
+$counter++;
+if($amount > $balance){
+$notify['InsufficientInvitee'] = 'insufficient';
+}else{
+$deduct = $balance - $amount;
+$updateWallet = $this->conn->query("UPDATE users_tb SET wallet = '$deduct' WHERE user_id = '$inviteeid'");
+$deductUser = $balanceuser - $amount;
+$updateInviterWallet = $this->conn->query("UPDATE users_tb SET wallet = '$deductUser' WHERE user_id = '$userid'");
+$updatetAll = $counter+1; 
+$updater = $updatetAll*$amount;
+$updateThriftWallet = $this->conn->query("UPDATE ajo_tb SET ajowallet = '$updater', status = 'Ongoing' WHERE ajo_id = '$ajoId'");
+if($updateThriftWallet){
+$notify['Started'] = 'started';
+}
+}
+}
+}
+}
+}
+
+}else{
+$notify['Startedalready'] = 'alreadystarted';
+}
+
+}
+
+echo json_encode($notify);
+}
+
+public function pay($userid, $ajoid){
+$check = $this->conn->query("SELECT * FROM invite_tb WHERE ajo_id = '$ajoid' and invitee_id = '$userid'");
+$myFetcheddata = $check->fetch_assoc();
+$paymentstatus = $myFetcheddata['payment'];
+if($paymentstatus=='notpaid'){
+$credit = $this->conn->query("SELECT * FROM ajo_tb WHERE ajo_id = '$ajoid'");
+$myFetcheddata = $credit->fetch_assoc();
+$balance = $myFetcheddata['ajowallet'];
+if($balance == 0){
+$notify['Walletempty'] = 'walletempty';
+}else{
+$userwallet = $this->conn->query("SELECT * FROM users_tb WHERE user_id = '$userid'");
+$myFetchedwallet = $userwallet->fetch_assoc();
+$wallet = $myFetchedwallet['wallet'];
+$add = $wallet + $balance;
+$updateuser = $this->conn->query("UPDATE users_tb SET wallet = '$add' WHERE user_id = '$userid'");
+if($updateuser){
+$updateajowallet = $this->conn->query("UPDATE ajo_tb SET ajowallet = 0 WHERE ajo_id = '$ajoid'");
+$updateinvite = $this->conn->query("UPDATE invite_tb SET payment = 'paid' WHERE ajo_id = '$ajoid' and invitee_id = '$userid'");
+$notify['Paid'] = 'paid';
+}
+}
+}else {
+$notify['AlreadyPaid'] = 'alreadypaid';
+}
+echo json_encode($notify);
+}
+
+public function payuser($userid, $ajoid){
+$check = $this->conn->query("SELECT * FROM ajo_tb WHERE ajo_id = '$ajoid' and user_id = '$userid'");
+$myFetcheddata = $check->fetch_assoc();
+$paymentstatus = $myFetcheddata['payment'];
+$balance = $myFetcheddata['ajowallet'];
+if($paymentstatus=='notpaid'){
+if($balance == 0){
+$notify['Walletempty'] = 'walletempty';
+}else{
+$userwallet = $this->conn->query("SELECT * FROM users_tb WHERE user_id = '$userid'");
+$myFetchedwallet = $userwallet->fetch_assoc();
+$wallet = $myFetchedwallet['wallet'];
+$add = $wallet + $balance;
+$updateuser = $this->conn->query("UPDATE users_tb SET wallet = '$add' WHERE user_id = '$userid'");
+if($updateuser){
+$updateajowallet = $this->conn->query("UPDATE ajo_tb SET ajowallet = 0, payment = 'paid' WHERE ajo_id = '$ajoid'");
+$notify['Paid'] = 'paid';
+}
+}
+}else {
+$notify['AlreadyPaid'] = 'alreadypaid';
+}
+echo json_encode($notify);
 }
 
 
-}
-
 
 }
-
-
-// //  $notify['Getaccepted'] = $x;
-//   // }
-// }}
-  // $y = array_column($x, 'wallet');
- 
-  // $z = $y - 1000;
-// if($deduct->num_rows > 0){
-// $myFetcheddata = $deduct->fetch_assoc();
-// $wallet =  $myFetcheddata['wallet'];
-
-// }
- 
-
-  
-  // echo json_encode($notify); 
-
-// $invitee=[];
-// $userid=[];
-// $check = $this->conn->query("SELECT * FROM invite_tb WHERE ajo_id = '$ajoId' and status = 'Accepted'");
-// if($check ->num_rows > 0){ 
-//   while($row = $check->fetch_array()){
-// $invitee[] = $row;
-// $checkId = $this->conn->query("SELECT * FROM users_tb WHERE user_id = 24");
-// if($checkId->num_rows > 0){
-//   echo 'good';
-  // while($row = $checkId->fetch_array()){
-  //   $userid[] = $row;
-  //      $notify['Getaccepted'] = $userid;
-  
-  // echo json_encode($notify);
-
-
-
-
-
-   // $notify['Getaccepted'] = $invitee ;
-  
-
-
-  
-
-
-  }
 
 ?>

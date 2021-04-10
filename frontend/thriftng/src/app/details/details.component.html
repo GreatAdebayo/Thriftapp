@@ -6,6 +6,7 @@
 <h5 class="font-weight-bold pt-1">{{post.title}}</h5> 
 <small class="font-weight-bold txt"><i class="fas fa-wallet"></i> Thrift Wallet</small>
 <p class="font-weight-bold txt">₦{{post.ajowallet}}.00</p>
+<small class="font-weight-bold" [class]="post.status=='Ongoing'? 'text-primary':post.status=='Pending'?'text-danger':''">{{post.status.toUpperCase()}}</small><br>
 <button class="btn text-white font-weight-bold shadow btn-sm animate__animated animate__fadeIn mb-2" data-toggle="modal" data-target="#exampleModal" [class]="acceptedInvites.length+1==post.duration?'invisible':''">
 <span>Invite</span>
 <i class="bi bi-arrow-right"></i>
@@ -23,8 +24,9 @@
 
 <div class="row my-5 mx-1 animate__animated animate__fadeIn">
 <div class="col">
-<small class="font-weight-bold text-info"><i class="fas fa-exclamation-circle"></i> You can start Thrift when the number of Participants is {{post.duration}}</small> <br>
-<div id="accordion" class="mt-2">
+<small class="font-weight-bold text-info"  [class]="post.status=='Pending'?'visible':'invisible'"><i class="fas fa-exclamation-circle"></i> You can Debit all participants when they are {{post.duration}} in numbers. </small><br>
+<small class="font-weight-bold text-info"  [class]="post.status=='Ongoing'?'visible':'invisible'"><i class="fas fa-exclamation-circle"></i> The Debit Participant Button will be visible on the next payment date. </small> <br>
+<div id="accordion" class="mt-2 animate__animated animate__fadeIn">
 <div class="card">
 <div class="card-header bg-transparent border-0" id="headingOne">
 <h5 class="mb-0">
@@ -56,12 +58,19 @@
 <p *ngFor="let post of acceptedInvites">
 <small class="font-weight-bold text-primary"><i class="fas fa-user"></i> {{post.invitee_name}}</small>
 </p>
+<small class="font-weight-bold text-danger" *ngIf="Invitenotify=='insuffinvite'">We are unable to debit your Participants' wallet, Confirm and ask them to Fund now.</small>
+<small class="font-weight-bold text-danger" *ngIf="Invitenotify=='insuff'">We are unable to debit your wallet, Fund now.</small>
+<small class="font-weight-bold text-danger" *ngIf="Invitenotify=='alreadystarted'">Thrift ALready Started</small>
+<small class="font-weight-bold text-info" *ngIf="Invitenotify=='started'"><i class="fas fa-check"></i> Thrift Started</small>
+<div *ngIf="processing" class="text-center">
+<app-loader></app-loader>
+</div> <br>
 <div class="mt-2 text-center">
- <button class="btn text-white font-weight-bold shadow btn-sm animate__animated animate__fadeIn mb-2" [class]="acceptedInvites.length+1!=post.duration?'invisible':''" (click)="startThrift()">
- <span>Start</span>
- <i class="bi bi-arrow-right"></i>
- </button>
- </div>
+<button class="btn text-white font-weight-bold shadow btn-sm animate__animated animate__fadeIn mb-2" [class]="acceptedInvites.length+1!=post.duration?'invisible':post.status=='Ongoing'?'invisible':''" (click)="startThrift()">
+<span>Debit Participants</span>
+<i class="bi bi-arrow-right"></i>
+</button>
+</div>
 </div>
 </div>
 </div> <br>
@@ -75,24 +84,22 @@
 </div>
 <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
 <div class="card-body">
-ddd
+<p>
+ <small class="font-weight-bold text-primary"><i class="fas fa-user"></i> You </small><button class="btn text-light btn-sm font-weight-bold float-right" [class]="post.status=='Ongoing'?'visible':'invisible'" (click)="payUser(userId)">Pay</button>
+</p> 
+<p *ngFor="let posts of acceptedInvites">
+<small class="font-weight-bold text-primary"><i class="fas fa-user"></i> {{posts.invitee_name}}</small><button class="btn text-light btn-sm font-weight-bold float-right" [class]="post.status=='Ongoing'?'visible':'invisible'" (click)="pay(posts.invitee_id)">Pay</button>
+</p>
+<small class="font-weight-bold text-danger" *ngIf="Invitenotify=='empty'">Please wait till next payment date</small>
+<small class="font-weight-bold text-danger" *ngIf="Invitenotify=='alreadypaid'">Already Paid</small>
+<small class="font-weight-bold text-info" *ngIf="Invitenotify=='paid'">Payment Sucessfull</small>
+<br>
+<div *ngIf="processing" class="text-center">
+ <app-loader></app-loader>
+ </div>
 </div>
 </div>
 </div><br>
-<div class="card">
-<div class="card-header bg-transparent border-0" id="headingThree">
-<h5 class="mb-0">
-<small class="font-weight-bold justify-content-center txt" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseThree">
-<i class="fas fa-cog"></i> Settings
-</small>
-</h5>
-</div>
-<div id="collapseFour" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
-<div class="card-body">
-ddd
-</div>
-</div>
-</div>
 </div>
 </div>
 </div>

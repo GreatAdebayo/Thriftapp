@@ -34,14 +34,14 @@ constructor(public http: HttpClient, public _app: AppService, public router: Rou
 Verify() {
 this.router.navigate(['/signup/emailverify'])
 }
-    accept(value) {
+accept(value) {
         this.processing = false;
     this.inviteeId = value
 if(parseInt(this.amount) > parseInt(this.balance)){
 this.requestnotify = 'insufficient'
 } else {
 
-let details = { ajoid: this.ajoid, inviteeid: this.inviteeId}
+let details = {ajoid: this.ajoid, inviteeid: this.inviteeId, duration: this.duration}
 this.http.post<any>(`${this.baseUrl}acceptreq.php`, JSON.stringify(details)).subscribe(
     data => {
 
@@ -59,6 +59,8 @@ else if (data.AlreadyRejected) {
     // this.router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
     //     this.router.navigate(['/dashboard/invites']);
     // });
+} else if (data.Filledup) {
+    this.requestnotify = 'filledup'  
 }
 })       
 }
